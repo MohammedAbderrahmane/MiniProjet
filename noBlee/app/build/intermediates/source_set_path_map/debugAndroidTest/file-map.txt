@@ -1,0 +1,9 @@
+com.example.noblee.test.app-core-1.5.0-0 C:\Users\Louriachi\.gradle\caches\transforms-3\1288222fad73d809ff344425a4172f20\transformed\core-1.5.0\res
+com.example.noblee.test.app-annotation-experimental-1.3.0-1 C:\Users\Louriachi\.gradle\caches\transforms-3\801e8d0c13e41e9fff251b1cae6d69cf\transformed\annotation-experimental-1.3.0\res
+com.example.noblee.test.app-androidTest-2 C:\Users\Louriachi\AndroidStudioProjects\noBlee\app\build\generated\res\resValues\androidTest\debug
+com.example.noblee.test.app-androidTest-3 C:\Users\Louriachi\AndroidStudioProjects\noBlee\app\build\generated\res\rs\androidTest\debug
+com.example.noblee.test.app-mergeDebugAndroidTestResources-4 C:\Users\Louriachi\AndroidStudioProjects\noBlee\app\build\intermediates\incremental\debugAndroidTest\mergeDebugAndroidTestResources\merged.dir
+com.example.noblee.test.app-mergeDebugAndroidTestResources-5 C:\Users\Louriachi\AndroidStudioProjects\noBlee\app\build\intermediates\incremental\debugAndroidTest\mergeDebugAndroidTestResources\stripped.dir
+com.example.noblee.test.app-merged_res-6 C:\Users\Louriachi\AndroidStudioProjects\noBlee\app\build\intermediates\merged_res\debugAndroidTest
+com.example.noblee.test.app-androidTest-7 C:\Users\Louriachi\AndroidStudioProjects\noBlee\app\src\androidTest\res
+com.example.noblee.test.app-androidTestDebug-8 C:\Users\Louriachi\AndroidStudioProjects\noBlee\app\src\androidTestDebug\res

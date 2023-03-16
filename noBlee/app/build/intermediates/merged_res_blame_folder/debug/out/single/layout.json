@@ -1,0 +1,54 @@
+[
+    {
+        "merged": "C:\\Users\\Louriachi\\.gradle\\daemon\\7.5\\com.example.noblee.app-mergeDebugResources-38:\\layout\\layout_pagnie.xml",
+        "source": "C:\\Users\\Louriachi\\.gradle\\daemon\\7.5\\com.example.noblee.app-main-41:\\layout\\layout_pagnie.xml"
+    },
+    {
+        "merged": "C:\\Users\\Louriachi\\.gradle\\daemon\\7.5\\com.example.noblee.app-mergeDebugResources-38:\\layout\\activity_main.xml",
+        "source": "C:\\Users\\Louriachi\\.gradle\\daemon\\7.5\\com.example.noblee.app-main-41:\\layout\\activity_main.xml"
+    },
+    {
+        "merged": "com.example.noblee.app-mergeDebugResources-38:/layout/activity_main.xml",
+        "source": "com.example.noblee.app-main-41:/layout/activity_main.xml"
+    },
+    {
+        "merged": "C:\\Users\\Louriachi\\.gradle\\daemon\\7.5\\com.example.noblee.app-mergeDebugResources-38:\\layout\\activity_profile.xml",
+        "source": "C:\\Users\\Louriachi\\.gradle\\daemon\\7.5\\com.example.noblee.app-main-41:\\layout\\activity_profile.xml"
+    },
+    {
+        "merged": "C:\\Users\\Louriachi\\.gradle\\daemon\\7.5\\com.example.noblee.app-mergeDebugResources-38:\\layout\\activity_register.xml",
+        "source": "C:\\Users\\Louriachi\\.gradle\\daemon\\7.5\\com.example.noblee.app-main-41:\\layout\\activity_register.xml"
+    },
+    {
+        "merged": "C:\\Users\\Louriachi\\.gradle\\daemon\\7.5\\com.example.noblee.app-mergeDebugResources-38:\\layout\\activity_commande.xml",
+        "source": "C:\\Users\\Louriachi\\.gradle\\daemon\\7.5\\com.example.noblee.app-main-41:\\layout\\activity_commande.xml"
+    },
+    {
+        "merged": "C:\\Users\\Louriachi\\.gradle\\daemon\\7.5\\com.example.noblee.app-mergeDebugResources-38:\\layout\\dialog_modifier_motpasse.xml",
+        "source": "C:\\Users\\Louriachi\\.gradle\\daemon\\7.5\\com.example.noblee.app-main-41:\\layout\\dialog_modifier_motpasse.xml"
+    },
+    {
+        "merged": "C:\\Users\\Louriachi\\.gradle\\daemon\\7.5\\com.example.noblee.app-mergeDebugResources-38:\\layout\\activity_charity.xml",
+        "source": "C:\\Users\\Louriachi\\.gradle\\daemon\\7.5\\com.example.noblee.app-main-41:\\layout\\activity_charity.xml"
+    },
+    {
+        "merged": "C:\\Users\\Louriachi\\.gradle\\daemon\\7.5\\com.example.noblee.app-mergeDebugResources-38:\\layout\\dialog_modifier_quentite.xml",
+        "source": "C:\\Users\\Louriachi\\.gradle\\daemon\\7.5\\com.example.noblee.app-main-41:\\layout\\dialog_modifier_quentite.xml"
+    },
+    {
+        "merged": "C:\\Users\\Louriachi\\.gradle\\daemon\\7.5\\com.example.noblee.app-mergeDebugResources-38:\\layout\\layout_produit.xml",
+        "source": "C:\\Users\\Louriachi\\.gradle\\daemon\\7.5\\com.example.noblee.app-main-41:\\layout\\layout_produit.xml"
+    },
+    {
+        "merged": "C:\\Users\\Louriachi\\.gradle\\daemon\\7.5\\com.example.noblee.app-mergeDebugResources-38:\\layout\\activity_consulter_produits.xml",
+        "source": "C:\\Users\\Louriachi\\.gradle\\daemon\\7.5\\com.example.noblee.app-main-41:\\layout\\activity_consulter_produits.xml"
+    },
+    {
+        "merged": "C:\\Users\\Louriachi\\.gradle\\daemon\\7.5\\com.example.noblee.app-mergeDebugResources-38:\\layout\\activity_login.xml",
+        "source": "C:\\Users\\Louriachi\\.gradle\\daemon\\7.5\\com.example.noblee.app-main-41:\\layout\\activity_login.xml"
+    },
+    {
+        "merged": "C:\\Users\\Louriachi\\.gradle\\daemon\\7.5\\com.example.noblee.app-mergeDebugResources-38:\\layout\\activity_magazin.xml",
+        "source": "C:\\Users\\Louriachi\\.gradle\\daemon\\7.5\\com.example.noblee.app-main-41:\\layout\\activity_magazin.xml"
+    }
+]
