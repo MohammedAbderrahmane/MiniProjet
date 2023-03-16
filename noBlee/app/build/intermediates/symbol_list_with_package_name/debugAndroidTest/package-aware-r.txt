@@ -1,3 +1,0 @@
-com.example.noblee.test
-style WhiteBackgroundDialogTheme
-style WhiteBackgroundTheme
