@@ -21,6 +21,7 @@ import android.widget.Toast;
 
 import com.example.nobleevondeur.MiseAJourActivity;
 import com.example.nobleevondeur.NonActivityClasses.ItemProduit;
+import com.example.nobleevondeur.NonActivityClasses.Magazin;
 import com.example.nobleevondeur.NonActivityClasses.ProduitAdapter;
 import com.example.nobleevondeur.R;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -57,7 +58,7 @@ public class ModifierFragment extends Fragment {
         produitAdapter = new ProduitAdapter(getContext(),desProduits);
         recyclerProduit.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerProduit.setAdapter(produitAdapter);
-        FirebaseFirestore.getInstance().collection("Produits")
+        Magazin.getInstance().getRef().collection("Produits")
                 .get()
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                     @Override

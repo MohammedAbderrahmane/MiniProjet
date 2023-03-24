@@ -21,6 +21,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.nobleevondeur.NonActivityClasses.ItemProduit;
+import com.example.nobleevondeur.NonActivityClasses.Magazin;
 import com.example.nobleevondeur.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -145,7 +146,7 @@ public class AjouterFragment extends Fragment {
     }
 
     private void ajouterProduit(String nom,String prix,String imageUrl) {
-        FirebaseFirestore.getInstance().collection("Produits")
+        Magazin.getInstance().getRef().collection("Produits")
                 .add(new ItemProduit(nom,prix,imageUrl))
                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                     @Override

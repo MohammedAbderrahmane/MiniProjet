@@ -16,7 +16,6 @@ import com.example.nobleevondeur.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.List;
@@ -92,6 +91,7 @@ public class ProduitAdapter extends RecyclerView.Adapter<ProduitHolder>{
         holder.modifierBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                // TODO Image update
                 modifierProduit(
                         pNom,
                         holder.modifierNom.getText().toString(),
@@ -112,7 +112,7 @@ public class ProduitAdapter extends RecyclerView.Adapter<ProduitHolder>{
 
     private void modifierProduit(String oldNom,String newNom,String newPrix) {
         if (nomChanged){
-            FirebaseFirestore.getInstance().collection("Produit")
+            Magazin.getInstance().getRef().collection("Produits")
                     .whereEqualTo("nom",oldNom)
                     .get()
                     .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
@@ -142,7 +142,7 @@ public class ProduitAdapter extends RecyclerView.Adapter<ProduitHolder>{
                     });
         }
         if (prixChanged){
-            FirebaseFirestore.getInstance().collection("Produit")
+            Magazin.getInstance().getRef().collection("Produits")
                     .whereEqualTo("nom",oldNom)
                     .get()
                     .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
@@ -175,7 +175,7 @@ public class ProduitAdapter extends RecyclerView.Adapter<ProduitHolder>{
     }
 
     void supprimerProduit(ProduitHolder holder, int position){
-        FirebaseFirestore.getInstance().collection("Produits")
+        Magazin.getInstance().getRef().collection("Produits")
                 .whereEqualTo("nom",produits.get(position).getNom())
                 .get()
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {

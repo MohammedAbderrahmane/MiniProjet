@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.nobleevondeur.NonActivityClasses.Magazin;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -43,6 +44,7 @@ public class GetAccessActivity extends AppCompatActivity {
                     public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
                         if (queryDocumentSnapshots.getDocuments().size() == 1){
                             Toast.makeText(GetAccessActivity.this, "Code is correct", Toast.LENGTH_SHORT).show();
+                            Magazin.createInstance(queryDocumentSnapshots.getDocuments().get(0).getReference());
                             finish();
                             startActivity(new Intent(getApplicationContext(),MainActivity.class));
                         }else {

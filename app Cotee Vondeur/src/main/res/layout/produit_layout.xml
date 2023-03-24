@@ -9,6 +9,7 @@
         android:id="@+id/produit_image"
         android:layout_width="125dp"
         android:layout_height="125dp"
+        android:background="#775F5F"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:srcCompat="@tools:sample/avatars" />
@@ -33,7 +34,7 @@
         android:id="@+id/produit_modifier_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="M"
+        android:text="Modifier"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -41,7 +42,7 @@
         android:id="@+id/produit_supprime_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="S"
+        android:text="Supprimer"
         app:layout_constraintBottom_toBottomOf="@+id/produit_image"
         app:layout_constraintEnd_toEndOf="parent" />
 
