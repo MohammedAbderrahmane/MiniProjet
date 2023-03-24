@@ -26,4 +26,13 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <Button
+        android:id="@+id/main_profile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="profile"
+        app:layout_constraintBottom_toTopOf="@+id/main_consulter"
+        app:layout_constraintEnd_toEndOf="@+id/main_consulter"
+        app:layout_constraintStart_toStartOf="@+id/main_consulter" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

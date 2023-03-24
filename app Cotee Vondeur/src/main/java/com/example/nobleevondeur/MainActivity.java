@@ -9,7 +9,7 @@ import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity {
 
-    Button miseAJour,consulter;
+    Button miseAJour,consulter,profile;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,12 +18,12 @@ public class MainActivity extends AppCompatActivity {
 
         miseAJour = findViewById(R.id.main_mise_a_jour);
         consulter = findViewById(R.id.main_consulter);
+        profile = findViewById(R.id.main_profile);
 
 
         miseAJour.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                finish();
                 startActivity(new Intent(MainActivity.this,MiseAJourActivity.class));
             }
         });
@@ -33,6 +33,13 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 finish();
                 //startActivity(new Intent(MainActivity.this,ConsulterCommandes.class));
+            }
+        });
+
+        profile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(MainActivity.this, MagazinActivity.class));
             }
         });
     }
