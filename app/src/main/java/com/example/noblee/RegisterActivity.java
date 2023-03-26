@@ -20,7 +20,6 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -79,38 +78,39 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     void register (String nom, String prenom, String email, String motpass){
-        db = FirebaseFirestore.getInstance();
-
 
         Map<String,String> itm = new HashMap<>();
         itm.put("nom",nom);
         itm.put("prenom",prenom);
         itm.put("email",email);
-/*
-        */
-        FirebaseAuth.getInstance().createUserWithEmailAndPassword(email,motpass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                if (task.isSuccessful()){
-                    DocumentReference refMalade = db.collection("Malades").document(FirebaseAuth.getInstance().getCurrentUser().getUid());
-                    refMalade.set(itm).addOnSuccessListener(new OnSuccessListener<Void>() {
-                                @Override
-                                public void onSuccess(Void unused) {
-                                    finish();
-                                    startActivity (new Intent(RegisterActivity.this, MainActivity.class));
-                                }
-                            })
-                            .addOnFailureListener(new OnFailureListener() {
-                                @Override
-                                public void onFailure(@NonNull Exception e) {
-                                    Toast.makeText(RegisterActivity.this,"Failed : "+e.toString(),Toast.LENGTH_SHORT).show();
-                                }
-                            });
-                }else{
-                    Toast.makeText(RegisterActivity.this,"Failed to register ",Toast.LENGTH_LONG).show();
-                }
-            }
-        });
+
+        FirebaseAuth.getInstance()
+                .createUserWithEmailAndPassword(email,motpass)
+                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if (task.isSuccessful()){
+                                DocumentReference refMalade = FirebaseFirestore.getInstance()
+                                        .collection("Malades")
+                                        .document(FirebaseAuth.getInstance().getCurrentUser().getUid());
+                                refMalade.set(itm).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                            @Override
+                                            public void onSuccess(Void unused) {
+                                                finish();
+                                                startActivity (new Intent(RegisterActivity.this, MainActivity.class));
+                                            }
+                                        })
+                                        .addOnFailureListener(new OnFailureListener() {
+                                            @Override
+                                            public void onFailure(@NonNull Exception e) {
+                                                Toast.makeText(RegisterActivity.this,"Failed : "+e.toString(),Toast.LENGTH_SHORT).show();
+                                            }
+                                        });
+                            }else{
+                                Toast.makeText(RegisterActivity.this,"Failed to register ",Toast.LENGTH_LONG).show();
+                            }
+                        }
+                });
 
     }
 
