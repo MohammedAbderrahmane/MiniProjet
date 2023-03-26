@@ -1,21 +1,12 @@
 package com.example.noblee.NonActivityClasses.RecycleViewProduits;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.media.Image;
-
-import androidx.recyclerview.widget.LinearLayoutManager;
-
 public class ItemProduit {
-    String nom,image, prix;
+    String nom, imageUrl, prix;
 
-    public ItemProduit() {
-    }
-
-    public ItemProduit(String nom, String prix, String image) {
+     public ItemProduit(String nom, String prix, String image) {
         this.nom = nom;
         this.prix = prix;
-        this.image = image;
+        this.imageUrl = image;
     }
 
     public String getNom() {
@@ -34,11 +25,11 @@ public class ItemProduit {
         this.prix = prix;
     }
 
-    public String getImage() {
-        return image;
+    public String getImageUrl() {
+        return imageUrl;
     }
 
-    public void setImage(String image) {
-        this.image = image;
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 }

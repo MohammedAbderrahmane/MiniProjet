@@ -18,6 +18,7 @@ public class PagnieHolder extends RecyclerView.ViewHolder {
 
     public PagnieHolder(@NonNull View itemView) {
         super(itemView);
+
         nomPagnie = itemView.findViewById(R.id.pagnie_nom_produit);
         prixPagnie = itemView.findViewById(R.id.pagnie_prix_produit);
         quentitePagnie = itemView.findViewById(R.id.pagnie_quentite_produit);

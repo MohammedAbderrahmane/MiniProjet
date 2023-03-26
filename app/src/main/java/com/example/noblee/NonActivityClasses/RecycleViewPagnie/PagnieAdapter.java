@@ -16,9 +16,6 @@ public class PagnieAdapter extends RecyclerView.Adapter<PagnieHolder> {
     Context context;
 
 
-    public PagnieAdapter() {
-    }
-
     public PagnieAdapter(Context context) {
         this.context = context;
     }

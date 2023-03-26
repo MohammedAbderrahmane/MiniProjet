@@ -118,19 +118,23 @@ public class SavedPagniesDb extends SQLiteOpenHelper {
         }
         pagniesTable.close();
     }
+
+    public int calculerSommeCommande(){
+        int somme = 0;
+        Cursor pagniesTable = getWritableDatabase().query(
+                T,
+                new String[] {N,P,Q},
+                null,
+                null,
+                null,
+                null,
+                null
+        );
+        while (pagniesTable.moveToNext()) {
+            somme += Integer.getInteger(pagniesTable.getString(pagniesTable.getColumnIndex(P)));
+        }
+        pagniesTable.close();
+        return somme;
+    }
 }
 
-/*
-    public static List<ItemPagnie> pagnies = new ArrayList<ItemPagnie>();
-
-    public static void add (ItemPagnie pagnie){
-        pagnies.add(pagnie);
-    }
-    public static void remove (int position){
-        pagnies.remove(position);
-    }
-
-    public static void clear(){
-        pagnies.clear();
-    }
-}*/
