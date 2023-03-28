@@ -3,10 +3,13 @@ package com.example.noblee.NonActivityClasses;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.widget.Toast;
 
 import com.example.noblee.NonActivityClasses.RecycleViewPagnie.ItemPagnie;
+import com.google.firebase.firestore.DocumentReference;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,14 +17,60 @@ import java.util.List;
 public class SavedPagniesDb extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "savedPagnies.db";
     private static final int DATABASE_VERSION = 1;
-
+    private static SavedPagniesDb instance;
     private static final String T = "Pagnie";
     private static final String N = "Nom";
     private static final String P = "Prix";
     private static final String Q = "Quentite";
-    private static SavedPagniesDb instance;
 
-    public static List<ItemPagnie>pagnies = new ArrayList<ItemPagnie>();
+    private static final String Magazin = "Magazin";
+    private static final String path = "Path";
+    public static List<ItemPagnie>pagnies = new ArrayList<>();
+
+    public boolean checkMemeMagazin(DocumentReference magazin){
+
+        if (DatabaseUtils.queryNumEntries(getReadableDatabase(),Magazin) == 0){
+            ContentValues values = new ContentValues();
+            values.put(path,magazin.getPath());
+            getWritableDatabase().insert(
+                    Magazin,
+                    null,
+                    values
+            );
+            getWritableDatabase().close();
+            return true;
+        }
+        return getReadableDatabase().query(
+                Magazin,
+                new String[]{path},
+                path + "= ?",
+                new String[]{magazin.getPath()},
+                null,
+                null,
+                null
+        ).getCount() == 1;
+    }
+
+    public String getMagazinPath(){
+        Cursor pagniesTable = getWritableDatabase().query(
+                Magazin,
+                new String[]{path},
+                null,
+                null,
+                null,
+                null,
+                null
+        );
+        pagniesTable.moveToNext();
+        return pagniesTable.getString(pagniesTable.getColumnIndex(path));
+    }
+
+    public void clearMagazin(){
+        getWritableDatabase().delete(Magazin,null,null);
+        getWritableDatabase().close();
+    }
+
+
     private SavedPagniesDb(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
@@ -40,11 +89,15 @@ public class SavedPagniesDb extends SQLiteOpenHelper {
                 + P +" TEXT,"
                 + Q +" TEXT)";
         db.execSQL(creeTablePagnie);
+
+        String creeTableMagazinRef = "CREATE TABLE "+Magazin+" ("
+                + path +" TEXT PRIMARY KEY)";
+        db.execSQL(creeTableMagazinRef);
+
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        // Upgrade your database schema here
     }
 
     public boolean ajouterUnPagnie (String nom, String prix, String quentite){
@@ -80,17 +133,21 @@ public class SavedPagniesDb extends SQLiteOpenHelper {
         getWritableDatabase().delete(T,N +"= ?",new String[] {nom});
         getWritableDatabase().close();
         for (int i = 0; i < pagnies.size(); i++) {
+            if (pagnies.size() == 1)
+                clearMagazin();
             if (pagnies.get(i).getNom() == nom){
                 pagnies.remove(i);
                 return;
             }
         }
+
     }
 
     public void viderPagnie (){
         getWritableDatabase().delete(T,null,null);
         getWritableDatabase().close();
         pagnies.clear();
+        clearMagazin();
     }
 
     public void setUpListPagnie (){
@@ -131,7 +188,7 @@ public class SavedPagniesDb extends SQLiteOpenHelper {
                 null
         );
         while (pagniesTable.moveToNext()) {
-            somme += Integer.getInteger(pagniesTable.getString(pagniesTable.getColumnIndex(P)));
+            somme += Integer.parseInt(pagniesTable.getString(pagniesTable.getColumnIndex(P)))*Integer.parseInt(pagniesTable.getString(pagniesTable.getColumnIndex(Q)));
         }
         pagniesTable.close();
         return somme;

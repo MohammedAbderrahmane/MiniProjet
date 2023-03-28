@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.noblee.NonActivityClasses.QuentiteDialoge;
+import com.example.noblee.NonActivityClasses.SavedPagniesDb;
 import com.example.noblee.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -26,6 +27,7 @@ public class ProduitAdapter extends RecyclerView.Adapter<ProduitHolder> {
 
     private Context context;
     private List<ItemProduit> produits;
+    private DocumentReference magazinRef;
 
 
     public ProduitAdapter(Context context, List<ItemProduit> produits) {
@@ -62,15 +64,20 @@ public class ProduitAdapter extends RecyclerView.Adapter<ProduitHolder> {
         holder.ajouterAuPagnie.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                argsOfDialog.putString("nom",produits.get(position).getNom());
-                argsOfDialog.putString("prix",produits.get(position).getPrix());
-                quentiteDialoge.setArguments(argsOfDialog);
-                quentiteDialoge.show(((AppCompatActivity) context).getSupportFragmentManager(),"quentite");
+                if (SavedPagniesDb.getInstance(context).checkMemeMagazin(magazinRef)) {
+                    argsOfDialog.putString("nom", produits.get(position).getNom());
+                    argsOfDialog.putString("prix", produits.get(position).getPrix());
+                    quentiteDialoge.setArguments(argsOfDialog);
+                    quentiteDialoge.show(((AppCompatActivity) context).getSupportFragmentManager(), "quentite");
+                }else{
+                    Toast.makeText(context, "You must select products from one Shop", Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
 
     public void getProduitsOfFirestore(DocumentReference magazinReference){
+        magazinRef = magazinReference;
         magazinReference.collection("Produits")
                 .get()
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {

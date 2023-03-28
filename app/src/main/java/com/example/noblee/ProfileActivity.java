@@ -1,14 +1,14 @@
 package com.example.noblee;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.noblee.NonActivityClasses.ModifierMotpasseDialoge;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -67,8 +67,10 @@ final String ERROR_FETCH = "Error";
     }
 
     private void setInformations() {
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        db.collection("Malades").document(user.getUid()).get()
+        FirebaseFirestore.getInstance()
+                .collection("Malades")
+                .document(user.getUid())
+                .get()
                 .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {

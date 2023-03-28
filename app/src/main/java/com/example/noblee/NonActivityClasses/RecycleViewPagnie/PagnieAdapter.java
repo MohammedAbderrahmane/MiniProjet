@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.noblee.CommandeActivity;
 import com.example.noblee.NonActivityClasses.SavedPagniesDb;
 import com.example.noblee.R;
 
@@ -38,6 +39,7 @@ public class PagnieAdapter extends RecyclerView.Adapter<PagnieHolder> {
             @Override
             public void onClick(View view) {
                 SavedPagniesDb.getInstance(context.getApplicationContext()).supprimer(pagnie.getNom());
+                ((CommandeActivity) context).updatePrixTotal();
                 notifyDataSetChanged();
             }
         });
