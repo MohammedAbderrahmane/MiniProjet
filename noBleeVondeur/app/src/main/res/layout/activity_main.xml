@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <Button
+        android:id="@+id/main_mise_a_jour"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Mise a jour des produit"
+        app:layout_constraintEnd_toEndOf="@+id/main_consulter"
+        app:layout_constraintStart_toStartOf="@+id/main_consulter"
+        app:layout_constraintTop_toBottomOf="@+id/main_consulter" />
+
+    <Button
+        android:id="@+id/main_consulter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="100dp"
+        android:singleLine="false"
+        android:text="Consulter liste des commande"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/main_profile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="profile"
+        app:layout_constraintBottom_toTopOf="@+id/main_consulter"
+        app:layout_constraintEnd_toEndOf="@+id/main_consulter"
+        app:layout_constraintStart_toStartOf="@+id/main_consulter" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
