@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ProfileActivity">
+
+    <TextView
+        android:id="@+id/profile_nom1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="nom :"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/profile_prenom1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="prenom :"
+        app:layout_constraintEnd_toEndOf="@+id/profile_nom1"
+        app:layout_constraintStart_toStartOf="@+id/profile_nom1"
+        app:layout_constraintTop_toBottomOf="@+id/profile_nom1" />
+
+    <TextView
+        android:id="@+id/profile_email1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="email :"
+        app:layout_constraintEnd_toEndOf="@+id/profile_prenom1"
+        app:layout_constraintStart_toStartOf="@+id/profile_prenom1"
+        app:layout_constraintTop_toBottomOf="@+id/profile_prenom1" />
+
+    <TextView
+        android:id="@+id/profile_motapsse1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=" motpasse :"
+        app:layout_constraintEnd_toEndOf="@+id/profile_email1"
+        app:layout_constraintStart_toStartOf="@+id/profile_email1"
+        app:layout_constraintTop_toBottomOf="@+id/profile_email1" />
+
+    <Button
+        android:id="@+id/profile_deconnecter_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Deconecter"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <TextView
+        android:id="@+id/profile_nom2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@+id/profile_nom1"
+        app:layout_constraintStart_toEndOf="@+id/profile_nom1"
+        app:layout_constraintTop_toTopOf="@+id/profile_nom1" />
+
+    <TextView
+        android:id="@+id/profile_prenom2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@+id/profile_prenom1"
+        app:layout_constraintStart_toEndOf="@+id/profile_prenom1"
+        app:layout_constraintTop_toBottomOf="@+id/profile_nom1" />
+
+    <TextView
+        android:id="@+id/profile_email2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@+id/profile_email1"
+        app:layout_constraintStart_toEndOf="@+id/profile_email1"
+        app:layout_constraintTop_toTopOf="@+id/profile_email1" />
+
+    <Button
+        android:id="@+id/profile_modifierMotpasse_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="modifieer motpasse"
+        app:layout_constraintStart_toStartOf="@+id/profile_motapsse1"
+        app:layout_constraintTop_toBottomOf="@+id/profile_motapsse1" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
