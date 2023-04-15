@@ -12,6 +12,9 @@
         android:theme="@style/Theme.NoBlee"
         tools:targetApi="31">
         <activity
+            android:name=".PublicationActivity"
+            android:exported="false" />
+        <activity
             android:name=".CommandeActivity"
             android:exported="false" />
         <activity

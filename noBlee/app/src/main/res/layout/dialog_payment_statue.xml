@@ -3,24 +3,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".CharityActivity">
+    android:layout_height="match_parent">
 
-    <EditText
-        android:id="@+id/charity_somme_argent"
+    <TextView
+        android:id="@+id/dialog_payment_statue"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:hint="1000 da"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <Button
-        android:id="@+id/charity_payment"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="donner"
+        android:layout_marginTop="40dp"
+        android:text="Merci beacoup de votre donation"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/charity_somme_argent" />
-
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

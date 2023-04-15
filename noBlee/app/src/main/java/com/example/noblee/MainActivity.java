@@ -13,7 +13,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.noblee.NonActivityClasses.QuentiteDialoge;
+import com.example.noblee.NonActivityClasses.RecycleViewProduits.QuentiteDialoge;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
 
     FirebaseFirestore db;
     ImageButton prfl;
-    Button consulterProduits,pageCommande;
+    Button consulterProduits,pageCommande,donnerArgent;
     EditText recherche_ed;
     private Button test;
 
@@ -37,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
 
         consulterProduits = findViewById(R.id.main_consulter_produits);
         pageCommande = findViewById(R.id.main_page_commande);
+        donnerArgent = findViewById(R.id.main_donner_argent);
 
         prfl = findViewById(R.id.main_to_profile);
         recherche_ed = findViewById(R.id.main_recherche);
@@ -49,7 +50,6 @@ public class MainActivity extends AppCompatActivity {
                     startActivity(new Intent(MainActivity.this,LoginActivity.class));
                 else
                     startActivity(new Intent(MainActivity.this,ProfileActivity.class));
-                //finish();
             }
         });
 
@@ -59,44 +59,22 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(getApplicationContext(),ConsulterProduitsActivity.class));
             }
         });
+
         pageCommande.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getApplicationContext(),CommandeActivity.class));
+                startActivity(new Intent(MainActivity.this,CommandeActivity.class));
             }
         });
 
-        QuentiteDialoge selectinerQuentiteDialoge = new QuentiteDialoge();
+        donnerArgent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(MainActivity.this,CharityActivity.class));
+            }
+        });
     }
 
 
-    //RECHERCHE
-    TextWatcher recherche = new TextWatcher() {
-        @Override
-        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
 
-        @Override
-        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-            // TODO
-            String motKle = recherche_ed.getText().toString();
-            db.collection("Produits")
-                    .whereEqualTo("nom",motKle)
-                    .get()
-                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                        @Override
-                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                            if (task.isSuccessful()){
-                                QuerySnapshot produitRecherche = task.getResult();
-                                Toast.makeText(MainActivity.this, "Product found :"+produitRecherche, Toast.LENGTH_SHORT).show();
-                            }else {
-                                Toast.makeText(MainActivity.this, "Error while shershing", Toast.LENGTH_SHORT).show();
-                            }
-
-                        }
-                    });
-        }
-
-        @Override
-        public void afterTextChanged(Editable editable) {}
-    };
 }
