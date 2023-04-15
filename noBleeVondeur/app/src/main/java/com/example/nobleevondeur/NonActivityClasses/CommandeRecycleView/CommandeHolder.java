@@ -2,6 +2,7 @@ package com.example.nobleevondeur.NonActivityClasses.CommandeRecycleView;
 
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -13,7 +14,7 @@ public class CommandeHolder extends RecyclerView.ViewHolder {
 
     TextView nubmber,prixTotal;
     RecyclerView lignies_commandes;
-    Button accepter,refuser;
+    ImageButton accepter,refuser;
 
     public CommandeHolder(@NonNull View itemView) {
         super(itemView);

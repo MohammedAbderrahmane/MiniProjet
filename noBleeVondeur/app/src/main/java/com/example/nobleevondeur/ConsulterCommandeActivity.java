@@ -6,10 +6,11 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.view.View;
 
 import com.example.nobleevondeur.NonActivityClasses.CommandeRecycleView.CommandeAdapter;
 import com.example.nobleevondeur.NonActivityClasses.CommandeRecycleView.ItemCommande;
-import com.example.nobleevondeur.NonActivityClasses.Magazin;
+import com.example.nobleevondeur.NonActivityClasses.DataBase;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -21,6 +22,7 @@ import java.util.List;
 public class ConsulterCommandeActivity extends AppCompatActivity {
 
     RecyclerView commandeRecycleView;
+    View noCommande;
     List<ItemCommande> commandes = new ArrayList<>();
 
     @Override
@@ -28,16 +30,26 @@ public class ConsulterCommandeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_commande);
 
-        setUpCommandesRecycleView();
+        noCommande = findViewById(R.id.consulter_commandes_no_commande);
+        commandeRecycleView = findViewById(R.id.consulter_commandes_recycle_view);
+
+        if (commandes.isEmpty()){
+            noCommande.setVisibility(View.VISIBLE);
+            commandeRecycleView.setVisibility(View.GONE);
+        }else {
+            noCommande.setVisibility(View.GONE);
+            commandeRecycleView.setVisibility(View.VISIBLE);
+            setUpCommandesRecycleView();
+        }
+
 
     }
 
     void setUpCommandesRecycleView (){
-        commandeRecycleView = findViewById(R.id.consulter_commandes_recycle_view);
         CommandeAdapter commandeAdapter = new CommandeAdapter(ConsulterCommandeActivity.this,commandes);
         commandeRecycleView.setLayoutManager(new LinearLayoutManager(ConsulterCommandeActivity.this));
         commandeRecycleView.setAdapter(commandeAdapter);
-        Magazin.getInstance().getRef()
+        DataBase.getInstance(getApplicationContext()).getMagazinRef()
                 .collection("Commandes")
                 .get()
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {

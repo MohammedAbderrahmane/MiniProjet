@@ -1,5 +1,6 @@
 package com.example.nobleevondeur.MiseAJourFragments;
 
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.Editable;
@@ -10,23 +11,25 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
-
+import android.Manifest;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import com.example.nobleevondeur.NonActivityClasses.ItemProduit;
-import com.example.nobleevondeur.NonActivityClasses.Magazin;
+import com.example.nobleevondeur.NonActivityClasses.DataBase;
 import com.example.nobleevondeur.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -34,18 +37,24 @@ import com.google.firebase.storage.UploadTask;
 public class AjouterFragment extends Fragment {
 
     ImageButton photo;
-    EditText prix,nom;
+    EditText prix,nom,categorie;
     Button ajouter;
     TextView statue_image;
     boolean imageSelected = false;
     Uri tmpImage;
     String imageUrl;
     private ActivityResultLauncher<String> getContent;
+    private ProgressBar prograsBar;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // for getting image from phone storage
+        setUpGetContent();
+
+    }
+
+    private void setUpGetContent() {
         getContent = registerForActivityResult(new ActivityResultContracts.GetContent(),new ActivityResultCallback<Uri>() {
             @Override
             public void onActivityResult(Uri result) {
@@ -54,13 +63,15 @@ public class AjouterFragment extends Fragment {
                         statue_image.setText("Image selected");
                         imageSelected = true;
                         tmpImage = result;
-                        if (nom.getText().toString().isEmpty()||
+                        if (
+                                nom.getText().toString().isEmpty()||
                                 prix.getText().toString().isEmpty()||
-                                !imageSelected){
+                                categorie.getText().toString().isEmpty()||
+                                !imageSelected)
                             ajouter.setEnabled(false);
-                        }else{
+                        else
                             ajouter.setEnabled(true);
-                        }
+
                     }else {
                         statue_image.setText("Image not selected");
                         imageSelected = false;
@@ -72,9 +83,6 @@ public class AjouterFragment extends Fragment {
         });
     }
 
-    public AjouterFragment() {
-    }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_ajouter,container,false);
@@ -82,8 +90,10 @@ public class AjouterFragment extends Fragment {
         ajouter = view.findViewById(R.id.ajouter_ajouter_btn);
         prix = view.findViewById(R.id.ajouter_prix);
         nom = view.findViewById(R.id.ajouter_nom);
-        photo = view.findViewById(R.id.ajouter_photo);
+        categorie = view.findViewById(R.id.ajouter_categorie);
+        photo = view.findViewById(R.id.produit_modifier_btn);
         statue_image = view.findViewById(R.id.ajouter_statue_image);
+        prograsBar = view.findViewById(R.id.ajouter_progress_bar);
 
         ajouter.setEnabled(false);
         nom.addTextChangedListener(textWatcher);
@@ -93,12 +103,10 @@ public class AjouterFragment extends Fragment {
         photo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // TODO : handele parmission denied
-                try {
+                if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)
+                    ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
+                else
                     getContent.launch("image/*");
-                }catch (Exception e){
-                    Toast.makeText(getContext(),e.toString(), Toast.LENGTH_SHORT).show();
-                }
             }
         });
 
@@ -112,6 +120,7 @@ public class AjouterFragment extends Fragment {
     }
 
     private void ajouterProduitEtImage() {
+        prograsBar.setVisibility(View.VISIBLE);
         StorageReference newImgRef = FirebaseStorage.getInstance().getReference().child("images/" + tmpImage.getLastPathSegment());
         newImgRef.putFile(tmpImage)
                 .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
@@ -125,6 +134,7 @@ public class AjouterFragment extends Fragment {
                                         ajouterProduit(
                                                 nom.getText().toString(),
                                                 prix.getText().toString(),
+                                                categorie.getText().toString(),
                                                 uri.toString());
                                     }
                                 })
@@ -145,18 +155,21 @@ public class AjouterFragment extends Fragment {
                 });
     }
 
-    private void ajouterProduit(String nom,String prix,String imageUrl) {
-        Magazin.getInstance().getRef().collection("Produits")
-                .add(new ItemProduit(nom,prix,imageUrl))
+    private void ajouterProduit(String nom,String prix,String categorie,String imageUrl) {
+        DataBase.getInstance(getContext()).getMagazinRef()
+                .collection("Produits")
+                .add(new ItemProduit(nom,prix,categorie,imageUrl))
                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                     @Override
                     public void onSuccess(DocumentReference documentReference) {
-                        Toast.makeText(getContext(),"produit ajoutee", Toast.LENGTH_SHORT).show();
+                        prograsBar.setVisibility(View.INVISIBLE);
+                        Toast.makeText(getContext(), "Le produit a ete ajouté", Toast.LENGTH_SHORT).show();
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
+                        prograsBar.setVisibility(View.INVISIBLE);
                         Toast.makeText(getContext(),e.toString(), Toast.LENGTH_SHORT).show();
                     }
                 });
@@ -169,8 +182,10 @@ public class AjouterFragment extends Fragment {
         }
         @Override
         public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-            if (nom.getText().toString().isEmpty()||
+            if (
+                    nom.getText().toString().isEmpty()||
                     prix.getText().toString().isEmpty()||
+                    categorie.getText().toString().isEmpty()||
                     !imageSelected){
                 ajouter.setEnabled(false);
             }else{

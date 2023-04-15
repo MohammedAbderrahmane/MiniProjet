@@ -7,32 +7,64 @@
     tools:context=".MainActivity">
 
     <Button
-        android:id="@+id/main_mise_a_jour"
+        android:id="@+id/main_profile"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Mise a jour des produit"
-        app:layout_constraintEnd_toEndOf="@+id/main_consulter"
-        app:layout_constraintStart_toStartOf="@+id/main_consulter"
-        app:layout_constraintTop_toBottomOf="@+id/main_consulter" />
+        android:background="@drawable/button_background"
+        android:drawableRight="@drawable/shop"
+        android:layout_marginTop="80dp"
+        android:ems="10"
+        android:paddingRight="14dp"
+        android:text="Profile"
+        android:textAllCaps="false"
+        android:textSize="15dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/main_bonjour" />
 
     <Button
         android:id="@+id/main_consulter"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="@drawable/button_background"
+        android:layout_marginTop="25dp"
+        android:drawableRight="@drawable/purchasing"
+        android:ems="15"
+        android:paddingRight="17dp"
+        android:text="Consullter la liste des commandes"
+        android:textAllCaps="false"
+        android:textSize="15dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/main_profile" />
+
+    <Button
+        android:id="@+id/main_mise_a_jour"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/button_background"
+        android:layout_marginTop="25dp"
+        android:drawableRight="@drawable/icon_edit"
+        android:ems="15"
+        android:paddingRight="17dp"
+        android:text="Mise a jour les produits"
+        android:textAllCaps="false"
+        android:textSize="15dp"
+        app:layout_constraintEnd_toEndOf="@+id/main_profile"
+        app:layout_constraintStart_toStartOf="@+id/main_profile"
+        app:layout_constraintTop_toBottomOf="@+id/main_consulter" />
+
+    <TextView
+        android:id="@+id/main_bonjour"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginTop="100dp"
-        android:singleLine="false"
-        android:text="Consulter liste des commande"
+        android:text="Bonjour ..."
+        android:textColor="@color/black"
+        android:textSize="24dp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/main_profile"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="profile"
-        app:layout_constraintBottom_toTopOf="@+id/main_consulter"
-        app:layout_constraintEnd_toEndOf="@+id/main_consulter"
-        app:layout_constraintStart_toStartOf="@+id/main_consulter" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

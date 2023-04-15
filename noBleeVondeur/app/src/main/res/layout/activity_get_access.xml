@@ -6,34 +6,65 @@
     android:layout_height="match_parent"
     tools:context=".GetAccessActivity">
 
-    <EditText
-        android:id="@+id/get_access_code"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="150dp"
-        android:ems="10"
-        android:inputType="textPassword"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/get_access_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="accepter"
-        app:layout_constraintEnd_toEndOf="@+id/get_access_code"
-        app:layout_constraintHorizontal_bias="0.577"
-        app:layout_constraintStart_toStartOf="@+id/get_access_code"
-        app:layout_constraintTop_toBottomOf="@+id/get_access_statue" />
-
     <TextView
         android:id="@+id/get_access_statue"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="fill the edit text"
+        android:layout_marginTop="150dp"
+        android:text="Entrer votre code d'accee :"
+        android:textColor="@color/black"
+        android:textSize="18dp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="@+id/get_access_code"
         app:layout_constraintStart_toStartOf="@+id/get_access_code"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/get_access_code"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
+        android:background="@drawable/edit_text_background"
+        android:drawableRight="@drawable/key"
+        android:drawablePadding="8dp"
+        android:hint="code d'accee"
+        android:padding="16dp"
+        android:paddingRight="20dp"
+        android:textColorHint="@color/cardview_dark_background"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/get_access_statue" />
+
+    <androidx.appcompat.widget.SwitchCompat
+        android:id="@+id/get_access_remember_me"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="Remember me"
+        app:switchPadding="4dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/get_access_code" />
 
+    <ImageButton
+        android:id="@+id/get_access_accept"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/image_button_background"
+        android:padding="12dp"
+        android:src="@drawable/tick"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/get_access_remember_me"/>
+
+    <ProgressBar
+        android:id="@+id/get_access_progress_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:layout_marginTop="40dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/get_access_accept" />
 </androidx.constraintlayout.widget.ConstraintLayout>

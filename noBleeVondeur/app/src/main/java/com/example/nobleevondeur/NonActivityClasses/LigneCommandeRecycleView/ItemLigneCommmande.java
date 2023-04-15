@@ -2,7 +2,15 @@ package com.example.nobleevondeur.NonActivityClasses.LigneCommandeRecycleView;
 
 public class ItemLigneCommmande {
 
-    String nom,prix,quentite;
+    String nom,quentite,prix;
+
+    public String getPrix() {
+        return prix;
+    }
+
+    public void setPrix(String prix) {
+        this.prix = prix;
+    }
 
     public ItemLigneCommmande(String nom, String prix, String quentite) {
         this.nom = nom;
@@ -16,14 +24,6 @@ public class ItemLigneCommmande {
 
     public void setNom(String nom) {
         this.nom = nom;
-    }
-
-    public String getPrix() {
-        return prix;
-    }
-
-    public void setPrix(String prix) {
-        this.prix = prix;
     }
 
     public String getQuentite() {

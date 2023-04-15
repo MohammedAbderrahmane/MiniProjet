@@ -1,17 +1,22 @@
 package com.example.nobleevondeur;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.nobleevondeur.NonActivityClasses.Magazin;
+import com.example.nobleevondeur.NonActivityClasses.DataBase;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -22,8 +27,10 @@ import java.util.Map;
 public class MagazinActivity extends AppCompatActivity {
 
     Button modifier;
+    ImageButton logout;
     EditText nomMagazin,nomVondeur,numTelephone;
     Map<String,String> MagazinData;
+    ProgressBar progressBar;
     boolean nomMagazinChanged=false,nomVondeurChanged=false,numTelephoneChanged=false;
 
 
@@ -32,80 +39,70 @@ public class MagazinActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_magazin);
 
-            nomMagazin = findViewById(R.id.magazin_nom);
-            nomVondeur = findViewById(R.id.magazin_nom_vondeur);
-            numTelephone = findViewById(R.id.magazin_num_telephone);
-            modifier = findViewById(R.id.magazin_modifier_information);
+        nomMagazin = findViewById(R.id.magazin_nom);
+        nomVondeur = findViewById(R.id.magazin_nom_vondeur);
+        numTelephone = findViewById(R.id.magazin_num_telephone);
+        modifier = findViewById(R.id.magazin_modifier_information);
+        logout = findViewById(R.id.magazin_logout);
+        progressBar = findViewById(R.id.magazin_progress_bar);
 
-            setUpInfo();
+        setUpInfo();
 
-            nomMagazin.addTextChangedListener(textWatcher);
-            numTelephone.addTextChangedListener(textWatcher);
-            nomVondeur.addTextChangedListener(textWatcher);
+        nomMagazin.addTextChangedListener(textWatcher);
+        numTelephone.addTextChangedListener(textWatcher);
+        nomVondeur.addTextChangedListener(textWatcher);
 
-            modifier.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    modifierInformation();
+        modifier.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                    modifierInformation(
+                            nomMagazin.getText().toString(),
+                            nomVondeur.getText().toString(),
+                            numTelephone.getText().toString()
+                    );
                 }
-            });
-
-
+        });
+        logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                    magazinLogout();
+                }
+        });
     }
 
-    private void modifierInformation() {
-        if (nomMagazinChanged){
-            Magazin.getInstance().getRef()
-                    .update("nom",nomMagazin.getText().toString())
-                    .addOnSuccessListener(new OnSuccessListener<Void>() {
-                        @Override
-                        public void onSuccess(Void unused) {
-                            Toast.makeText(MagazinActivity.this, "Seccus", Toast.LENGTH_SHORT).show();
-                        }
-                    })
-                    .addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            Toast.makeText(MagazinActivity.this,e.toString(), Toast.LENGTH_SHORT).show();
-                        }
-                    });
-        }
-        if (nomVondeurChanged){
-            Magazin.getInstance().getRef()
-                    .update("nom_vondeur",nomVondeur.getText().toString())
-                    .addOnSuccessListener(new OnSuccessListener<Void>() {
-                        @Override
-                        public void onSuccess(Void unused) {
-                            Toast.makeText(MagazinActivity.this, "Seccus", Toast.LENGTH_SHORT).show();
-                        }
-                    })
-                    .addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            Toast.makeText(MagazinActivity.this,e.toString(), Toast.LENGTH_SHORT).show();
-                        }
-                    });
-        }
-        if (numTelephoneChanged){
-            Magazin.getInstance().getRef()
-                    .update("telephone",numTelephone.getText().toString())
-                    .addOnSuccessListener(new OnSuccessListener<Void>() {
-                        @Override
-                        public void onSuccess(Void unused) {
-                            Toast.makeText(MagazinActivity.this, "Seccus", Toast.LENGTH_SHORT).show();
-                        }
-                    })
-                    .addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            Toast.makeText(MagazinActivity.this,e.toString(), Toast.LENGTH_SHORT).show();
-                        }
-                    });
-        }
+    private void magazinLogout() {
+        DataBase.getInstance(MagazinActivity.this).clearMagazin();
+        finish();
+        startActivity(new Intent(MagazinActivity.this,GetAccessActivity.class));
+    }
+
+    private void modifierInformation(String nomMagazin,String nomVondeur,String telephone) {
+        progressBar.setVisibility(View.VISIBLE);
+        Map<String,Object> updates = new HashMap();
+        updates.put("nom",nomMagazin);
+        updates.put("nom_vondeur",nomVondeur);
+        updates.put("telephone",telephone);
+
+        DataBase.getInstance(getApplicationContext()).getMagazinRef()
+                .update(updates)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+                        progressBar.setVisibility(View.GONE);
+                        Toast.makeText(MagazinActivity.this, "les information a ete modifiée", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        progressBar.setVisibility(View.GONE);
+                        Toast.makeText(MagazinActivity.this, e.toString(), Toast.LENGTH_SHORT).show();
+                    }
+                });
     }
 
     private void setUpInfo() {
-        Magazin.getInstance().getRef()
+        DataBase.getInstance(getApplicationContext()).getMagazinRef()
                 .get()
                 .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                     @Override
