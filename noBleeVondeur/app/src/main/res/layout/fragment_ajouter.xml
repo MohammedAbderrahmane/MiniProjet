@@ -1,40 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".MiseAJourFragments.AjouterFragment">
+    android:layout_height="match_parent" >
 
     <EditText
         android:id="@+id/ajouter_nom"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:hint="nom de produit"
+        android:background="@drawable/edit_text_background"
+        android:hint="Nom de prouit"
+        android:padding="16dp"
+        android:textColorHint="@color/cardview_dark_background"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="100dp"/>
 
     <EditText
         android:id="@+id/ajouter_prix"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="prix de produit"
-        android:inputType="textPersonName"
+        android:background="@drawable/edit_text_background"
+        android:hint="Prix de prouit"
+        android:padding="16dp"
+        android:layout_marginTop="16dp"
+        android:textColorHint="@color/cardview_dark_background"
         app:layout_constraintEnd_toEndOf="@+id/ajouter_nom"
         app:layout_constraintStart_toStartOf="@+id/ajouter_nom"
         app:layout_constraintTop_toBottomOf="@+id/ajouter_nom" />
 
     <ImageButton
-        android:id="@+id/ajouter_photo"
+        android:id="@+id/produit_modifier_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@android:drawable/ic_input_add"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/image_button_background"
+        android:padding="16dp"
+        android:src="@drawable/image_1"
+        app:layout_constraintEnd_toEndOf="@+id/ajouter_categorie"
+        app:layout_constraintStart_toStartOf="@+id/ajouter_categorie"
+        app:layout_constraintTop_toBottomOf="@+id/ajouter_categorie" />
+
+    <EditText
+        android:id="@+id/ajouter_categorie"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/edit_text_background"
+        android:hint="Catégorie de prouit"
+        android:padding="16dp"
+        android:layout_marginTop="16dp"
+        android:textColorHint="@color/cardview_dark_background"
         app:layout_constraintEnd_toEndOf="@+id/ajouter_prix"
         app:layout_constraintStart_toStartOf="@+id/ajouter_prix"
         app:layout_constraintTop_toBottomOf="@+id/ajouter_prix" />
@@ -43,19 +61,35 @@
         android:id="@+id/ajouter_ajouter_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Ajouter le produit"
-        app:layout_constraintEnd_toEndOf="@+id/ajouter_prix"
-        app:layout_constraintStart_toStartOf="@+id/ajouter_prix"
-        app:layout_constraintTop_toBottomOf="@+id/ajouter_photo" />
+        android:layout_marginTop="48dp"
+        android:background="@drawable/button_background"
+        android:drawableRight="@drawable/user_1"
+        android:text="Ajouter produit"
+        app:layout_constraintEnd_toEndOf="@+id/produit_modifier_btn"
+        app:layout_constraintStart_toStartOf="@+id/produit_modifier_btn"
+        app:layout_constraintTop_toBottomOf="@+id/produit_modifier_btn" />
 
     <TextView
         android:id="@+id/ajouter_statue_image"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
         android:text="No image selected"
-        app:layout_constraintBottom_toBottomOf="@+id/ajouter_photo"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/ajouter_photo"
-        app:layout_constraintTop_toBottomOf="@+id/ajouter_prix" />
+        android:textColor="@color/black"
+        android:textSize="14dp"
+        app:layout_constraintBottom_toBottomOf="@+id/produit_modifier_btn"
+        app:layout_constraintStart_toEndOf="@+id/produit_modifier_btn"
+        app:layout_constraintTop_toTopOf="@+id/produit_modifier_btn" />
+
+    <ProgressBar
+        android:id="@+id/ajouter_progress_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="48dp"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="@+id/ajouter_ajouter_btn"
+        app:layout_constraintStart_toStartOf="@+id/ajouter_ajouter_btn"
+        app:layout_constraintTop_toBottomOf="@+id/ajouter_ajouter_btn" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+

@@ -4,16 +4,19 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.nobleevondeur.NonActivityClasses.DataBase;
 import com.example.nobleevondeur.NonActivityClasses.LigneCommandeRecycleView.ItemLigneCommmande;
 import com.example.nobleevondeur.NonActivityClasses.LigneCommandeRecycleView.LigneCommandeAdapter;
 import com.example.nobleevondeur.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -42,8 +45,8 @@ public class CommandeAdapter extends RecyclerView.Adapter<CommandeHolder>{
     public void onBindViewHolder(@NonNull CommandeHolder holder, int position) {
         ItemCommande commande = commandes.get(position);
 
-        holder.nubmber.setText("N#" + position);
-        holder.prixTotal.setText(commande.getPrixTotal());
+        holder.nubmber.setText("N#" + (position+1));
+        holder.prixTotal.setText("Le prix total :" + commande.getPrixTotal());
         holder.accepter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -54,12 +57,57 @@ public class CommandeAdapter extends RecyclerView.Adapter<CommandeHolder>{
         holder.refuser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                supprimeCommande(commande);
             }
         });
 
         setUpLigneCommandesRecucleView(holder,position);
 
+    }
+
+    private void supprimeCommande(ItemCommande commande) {
+        DataBase.getInstance(context)
+                .getMagazinRef()
+                .collection("Commandes_refusee")
+                .add(
+                        new ItemCommandeRefusee(
+                                commande.getDate(),
+                                commande.getMaladeRef(),
+                                commande.getPrixTotal(),
+                                commande.getCommandeRef().getPath()
+                        )
+                )
+                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                    @Override
+                    public void onSuccess(DocumentReference reference) {
+                        commande.getCommandeRef()
+                                .delete()
+                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void unused) {
+                                        List<DocumentSnapshot> documents = commande.getCommandeRef()
+                                                .collection("Ligne_commande")
+                                                .get().getResult().getDocuments();
+                                        for (DocumentSnapshot document : documents) {
+                                            document.getReference().delete();
+                                        }
+                                        Toast.makeText(context, "Commande a ete refusee", Toast.LENGTH_SHORT).show();
+                                    }
+                                })
+                                .addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        Toast.makeText(context, e.toString(), Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(context, e.toString(), Toast.LENGTH_SHORT).show();
+                    }
+                });
     }
 
     @Override
@@ -92,7 +140,7 @@ public class CommandeAdapter extends RecyclerView.Adapter<CommandeHolder>{
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-
+                        Toast.makeText(context, e.toString(), Toast.LENGTH_SHORT).show();
                     }
                 });
 

@@ -5,117 +5,199 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <ImageView
-        android:id="@+id/produit_image"
-        android:layout_width="125dp"
-        android:layout_height="125dp"
-        android:background="#775F5F"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:srcCompat="@tools:sample/avatars" />
-
-    <TextView
-        android:id="@+id/produit_nom"
-        android:layout_width="wrap_content"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/produit_layout"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="nom"
-        app:layout_constraintStart_toEndOf="@+id/produit_image"
-        app:layout_constraintTop_toTopOf="@+id/produit_image" />
-
-    <TextView
-        android:id="@+id/produit_prix"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="prix"
-        app:layout_constraintBottom_toBottomOf="@+id/produit_image"
-        app:layout_constraintStart_toEndOf="@+id/produit_image" />
-
-    <Button
-        android:id="@+id/produit_modifier_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Modifier"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-    <Button
-        android:id="@+id/produit_supprime_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Supprimer"
-        app:layout_constraintBottom_toBottomOf="@+id/produit_image"
-        app:layout_constraintEnd_toEndOf="parent" />
+        <ImageView
+            android:id="@+id/produit_image"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:scaleType="fitCenter"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/produit_nom"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="6dp"
+            android:layout_marginTop="3dp"
+            android:text="Nom"
+            android:textColor="@color/black"
+            android:textSize="30dp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@+id/produit_image"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/produit_categorie"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="24dp"
+            android:layout_marginTop="6dp"
+            android:text="categorie"
+            android:textColor="#276418"
+            android:textSize="18dp"
+            app:layout_constraintStart_toStartOf="@+id/produit_nom"
+            app:layout_constraintTop_toBottomOf="@+id/produit_nom" />
+
+        <TextView
+            android:id="@+id/produit_prix"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginBottom="12dp"
+            android:text="prix"
+            android:textColor="#70130D"
+            android:textSize="18dp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/produit_image" />
+
+        <ImageButton
+            android:id="@+id/produit_supprime_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="25dp"
+            android:background="@drawable/image_button_background"
+            android:padding="12dp"
+            android:src="@drawable/icon_delete"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageButton
+            android:id="@+id/produit_modifier_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="25dp"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/image_button_background"
+            android:padding="12dp"
+            android:src="@drawable/icon_edit"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/modifier_layout"
         android:layout_width="0dp"
-        android:layout_height="300dp"
+        android:layout_height="wrap_content"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/produit_image"
-        app:layout_constraintVertical_bias="1.0">
+        app:layout_constraintTop_toBottomOf="@+id/produit_layout"
+        app:layout_constraintVertical_bias="0.0">
 
-        <EditText
-            android:id="@+id/modifier_nom"
+        <TextView
+            android:id="@+id/modifier_textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="100dp"
-            android:ems="10"
-            android:hint="nom de produit"
-            android:inputType="textPersonName"
+            android:layout_marginTop="50dp"
+            android:text="Modifier les information\nde produit :"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="16dp"
+            android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <EditText
-            android:id="@+id/modifier_prix"
+            android:id="@+id/modifier_nom"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/edit_text_background"
+            android:drawableRight="@drawable/label"
             android:ems="10"
-            android:hint="prix de produit"
             android:inputType="textPersonName"
+            android:paddingVertical="10dp"
+            android:paddingRight="10dp"
+            android:textAlignment="center"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/modifier_textView" />
+
+        <EditText
+            android:id="@+id/modifier_categorie"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/edit_text_background"
+            android:drawableRight="@drawable/categories"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:paddingVertical="10dp"
+            android:paddingRight="10dp"
+            android:textAlignment="center"
             app:layout_constraintEnd_toEndOf="@+id/modifier_nom"
             app:layout_constraintStart_toStartOf="@+id/modifier_nom"
             app:layout_constraintTop_toBottomOf="@+id/modifier_nom" />
+
+        <EditText
+            android:id="@+id/modifier_prix"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/edit_text_background"
+            android:drawableRight="@drawable/dollar"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:paddingVertical="10dp"
+            android:paddingRight="10dp"
+            android:textAlignment="center"
+            app:layout_constraintEnd_toEndOf="@+id/modifier_categorie"
+            app:layout_constraintStart_toStartOf="@+id/modifier_categorie"
+            app:layout_constraintTop_toBottomOf="@+id/modifier_categorie" />
 
         <ImageButton
             android:id="@+id/modifier_photo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@android:drawable/ic_input_add"
-            app:layout_constraintEnd_toEndOf="@+id/modifier_prix"
-            app:layout_constraintStart_toStartOf="@+id/modifier_prix"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/image_button_background"
+            android:gravity="center"
+            android:padding="12dp"
+            android:src="@drawable/edit_image"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/modifier_prix" />
 
-        <Button
-            android:id="@+id/modifier_modifier_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Modifier le produit"
-            app:layout_constraintEnd_toEndOf="@+id/modifier_prix"
-            app:layout_constraintStart_toStartOf="@+id/modifier_prix"
-            app:layout_constraintTop_toBottomOf="@+id/modifier_photo" />
 
         <TextView
             android:id="@+id/modifier_statue_image"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="No image selected"
+            android:textColor="@color/black"
+            android:textSize="15dp"
             app:layout_constraintBottom_toBottomOf="@+id/modifier_photo"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/modifier_photo"
-            app:layout_constraintTop_toBottomOf="@+id/modifier_prix" />
+            app:layout_constraintTop_toTopOf="@+id/modifier_photo" />
 
-        <TextView
-            android:id="@+id/modifier_textView"
-            android:layout_width="184dp"
-            android:layout_height="13dp"
-            android:text="Le formulaire est facultative"
-            app:layout_constraintBottom_toTopOf="@+id/modifier_nom"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+        <Button
+            android:id="@+id/modifier_modifier_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="15dp"
+            android:background="@drawable/button_background"
+            android:text="Modifier le produit"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/modifier_prix"
+            app:layout_constraintStart_toStartOf="@+id/modifier_prix"
+            app:layout_constraintTop_toBottomOf="@+id/modifier_photo" />
+
+
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

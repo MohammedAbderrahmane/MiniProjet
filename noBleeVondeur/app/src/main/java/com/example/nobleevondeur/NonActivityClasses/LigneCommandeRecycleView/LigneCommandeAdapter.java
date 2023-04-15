@@ -33,7 +33,6 @@ public class LigneCommandeAdapter extends RecyclerView.Adapter<LigneCommandeHold
         ItemLigneCommmande ligneCommmande = ligneCommmandeList.get(position);
 
         holder.nom.setText(ligneCommmande.getNom());
-        holder.prix.setText(ligneCommmande.getPrix());
         holder.quentite.setText(ligneCommmande.getQuentite());
     }
 

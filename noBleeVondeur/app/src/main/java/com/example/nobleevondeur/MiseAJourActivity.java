@@ -32,7 +32,6 @@ public class MiseAJourActivity extends AppCompatActivity {
         ajouter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ajouter.setActivated(true);
                 replaceFragment(new AjouterFragment());
             }
         });
@@ -46,10 +45,6 @@ public class MiseAJourActivity extends AppCompatActivity {
     }
 
     private void replaceFragment(Fragment fragment) {
-        boolean is_modifier = fragment instanceof AjouterFragment;
-        modifier.setActivated(is_modifier);
-        ajouter.setActivated(!is_modifier);
-
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.miseajour_frame_layout,fragment)
                 .commit();

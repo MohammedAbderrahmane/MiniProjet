@@ -1,6 +1,5 @@
 package com.example.nobleevondeur.NonActivityClasses;
 
-import android.net.Uri;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -16,13 +15,13 @@ import com.example.nobleevondeur.R;
 
 public class ProduitHolder extends RecyclerView.ViewHolder{
 
-    Button modifier,supprimer;
-    TextView prix,nom;
+    ImageButton modifier,supprimer;
+    TextView prix,nom,categorie;
     ImageView image;
     // ConstraintLayout
     ConstraintLayout modificationLayout;
     ImageButton modifierPhoto;
-    EditText modifierPrix,modifierNom;
+    EditText modifierPrix,modifierNom,modifierCategorie;
     Button modifierBtn;
     TextView modifierStatueImage;
 
@@ -34,6 +33,7 @@ public class ProduitHolder extends RecyclerView.ViewHolder{
         modifier = itemView.findViewById(R.id.produit_modifier_btn);
         supprimer = itemView.findViewById(R.id.produit_supprime_btn);
         prix = itemView.findViewById(R.id.produit_prix);
+        categorie = itemView.findViewById(R.id.produit_categorie);
         nom = itemView.findViewById(R.id.produit_nom);
         image = itemView.findViewById(R.id.produit_image);
 
@@ -41,6 +41,7 @@ public class ProduitHolder extends RecyclerView.ViewHolder{
 
         modificationLayout = itemView.findViewById(R.id.modifier_layout);
         modifierPrix = itemView.findViewById(R.id.modifier_prix);
+        modifierCategorie = itemView.findViewById(R.id.modifier_categorie);
         modifierNom = itemView.findViewById(R.id.modifier_nom);
         modifierPhoto = itemView.findViewById(R.id.modifier_photo);
         modifierBtn = itemView.findViewById(R.id.modifier_modifier_btn);

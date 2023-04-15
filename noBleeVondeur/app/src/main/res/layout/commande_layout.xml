@@ -3,49 +3,59 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:background="@drawable/edit_text_background"
+    android:layout_margin="2dp">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/commande_ligne_commande"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintEnd_toStartOf="@+id/commande_refuser"
-        app:layout_constraintStart_toEndOf="@+id/commande_number"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/commande_number" />
 
     <TextView
         android:id="@+id/commande_number"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="0 NN"
-        app:layout_constraintBottom_toBottomOf="@+id/commande_ligne_commande"
+        android:text="Commande : N#0"
+        android:textSize="18dp"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/commande_ligne_commande" />
-
-    <Button
-        android:id="@+id/commande_accept"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="accepter"
-        app:layout_constraintBottom_toBottomOf="@+id/commande_ligne_commande"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/commande_ligne_commande" />
-
-    <Button
-        android:id="@+id/commande_refuser"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="refuser"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/commande_ligne_commande" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/commande_prix_total"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="prixTotal :"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/commande_ligne_commande"
+        android:textColor="@color/black"
+        android:textSize="18dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/commande_ligne_commande" />
+
+    <ImageButton
+        android:id="@+id/commande_accept"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="130dp"
+        android:background="@drawable/image_button_background"
+        android:padding="15dp"
+        android:src="@drawable/check"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/commande_prix_total" />
+
+    <ImageButton
+        android:id="@+id/commande_refuser"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="130dp"
+        android:background="@drawable/image_button_background"
+        android:padding="16dp"
+        android:src="@drawable/cross"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/commande_prix_total" />
 </androidx.constraintlayout.widget.ConstraintLayout>
