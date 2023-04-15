@@ -1,4 +1,4 @@
-package com.example.noblee.NonActivityClasses;
+package com.example.noblee.NonActivityClasses.RecycleViewProduits;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -17,6 +17,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatDialogFragment;
 
+import com.example.noblee.NonActivityClasses.SavedPagniesDb;
 import com.example.noblee.R;
 
 public class QuentiteDialoge extends AppCompatDialogFragment {

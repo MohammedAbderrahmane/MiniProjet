@@ -34,7 +34,7 @@
         app:layout_constraintTop_toTopOf="@+id/main_consulter_produits" />
 
     <Button
-        android:id="@+id/main_test"
+        android:id="@+id/main_donner_argent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Button"
@@ -56,9 +56,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Button"
-        app:layout_constraintEnd_toEndOf="@+id/main_test"
-        app:layout_constraintStart_toStartOf="@+id/main_test"
-        app:layout_constraintTop_toBottomOf="@+id/main_test" />
+        app:layout_constraintEnd_toEndOf="@+id/main_donner_argent"
+        app:layout_constraintStart_toStartOf="@+id/main_donner_argent"
+        app:layout_constraintTop_toBottomOf="@+id/main_donner_argent" />
 
     <EditText
         android:id="@+id/main_recherche"

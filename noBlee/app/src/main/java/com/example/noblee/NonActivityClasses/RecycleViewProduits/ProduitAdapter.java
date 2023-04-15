@@ -12,7 +12,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.example.noblee.NonActivityClasses.QuentiteDialoge;
 import com.example.noblee.NonActivityClasses.SavedPagniesDb;
 import com.example.noblee.R;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -50,7 +49,7 @@ public class ProduitAdapter extends RecyclerView.Adapter<ProduitHolder> {
         // image
         setUpImage(produit.getImageUrl(),holder);
         // dialog
-        setUpAjouterAuPagnie(holder,new QuentiteDialoge(),position);
+        setUpAjouterAuPagnie(holder,position);
     }
 
     private void setUpImage(String imageUrl, ProduitHolder holder) {
@@ -59,8 +58,10 @@ public class ProduitAdapter extends RecyclerView.Adapter<ProduitHolder> {
                 .into(holder.imageProduit);
     }
 
-    private void setUpAjouterAuPagnie(ProduitHolder holder, QuentiteDialoge quentiteDialoge, int position){
+    private void setUpAjouterAuPagnie(ProduitHolder holder, int position){
         Bundle argsOfDialog = new Bundle();
+        QuentiteDialoge quentiteDialoge = new QuentiteDialoge();
+
         holder.ajouterAuPagnie.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
