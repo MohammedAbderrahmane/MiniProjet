@@ -26,7 +26,7 @@ public class CharityActivity extends AppCompatActivity {
 
     private PayPalConfiguration config = new PayPalConfiguration()
             .environment(PayPalConfiguration.ENVIRONMENT_SANDBOX)
-            .clientId("AYOrF9Rjc4ntL1PRIsrJDAHslQeRtRXVc2kCLWd8QloKOplFpcKo6nVcnK2uCaQiaKGnBjkxMTmzSsNw");
+            .clientId("AYgW1qySGyqGNc34sEk51Q7HOkrTm2NgVf8YP25md9pArRntnyYfPe_KPcdFSjMi1972PDIQZBSuRYiF");
 
     EditText sommeArgent;
     Button paymentBtn;
@@ -63,7 +63,7 @@ public class CharityActivity extends AppCompatActivity {
         PayPalPayment payment = new PayPalPayment
                 (
                         new BigDecimal(String.valueOf(somme)),
-                        "DA",
+                        "USD",
                         "Donate for gluten free product",
                         PayPalPayment.PAYMENT_INTENT_SALE
                 );
@@ -72,8 +72,10 @@ public class CharityActivity extends AppCompatActivity {
         Intent intent = new Intent(this, PaymentActivity.class);
         intent.putExtra(PayPalService.EXTRA_PAYPAL_CONFIGURATION , config);
         intent.putExtra(PaymentActivity.EXTRA_PAYMENT , payment);
+        try{startActivityForResult(intent , 1299);}catch (Exception e){
+            Toast.makeText(this, e.toString(), Toast.LENGTH_SHORT).show();
+        }
 
-        startActivityForResult(intent , 1299);
 
     }
 

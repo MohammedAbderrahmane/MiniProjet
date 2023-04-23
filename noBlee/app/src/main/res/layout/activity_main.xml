@@ -11,9 +11,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Button"
-        app:layout_constraintEnd_toEndOf="@+id/button4"
-        app:layout_constraintStart_toStartOf="@+id/button4"
-        app:layout_constraintTop_toBottomOf="@+id/button4" />
+        app:layout_constraintEnd_toEndOf="@+id/main_publication"
+        app:layout_constraintStart_toStartOf="@+id/main_publication"
+        app:layout_constraintTop_toBottomOf="@+id/main_publication" />
 
     <Button
         android:id="@+id/main_consulter_produits"
@@ -37,16 +37,16 @@
         android:id="@+id/main_donner_argent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Button"
+        android:text="Donner d'argent"
         app:layout_constraintEnd_toEndOf="@+id/main_consulter_produits"
         app:layout_constraintStart_toStartOf="@+id/main_consulter_produits"
         app:layout_constraintTop_toBottomOf="@+id/main_consulter_produits" />
 
     <Button
-        android:id="@+id/button4"
+        android:id="@+id/main_publication"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Button"
+        android:text="Publications"
         app:layout_constraintEnd_toEndOf="@+id/main_page_commande"
         app:layout_constraintStart_toStartOf="@+id/main_page_commande"
         app:layout_constraintTop_toBottomOf="@+id/main_page_commande" />
@@ -55,7 +55,7 @@
         android:id="@+id/button5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Button"
+        android:text="se resigner sur\n la maladie"
         app:layout_constraintEnd_toEndOf="@+id/main_donner_argent"
         app:layout_constraintStart_toStartOf="@+id/main_donner_argent"
         app:layout_constraintTop_toBottomOf="@+id/main_donner_argent" />

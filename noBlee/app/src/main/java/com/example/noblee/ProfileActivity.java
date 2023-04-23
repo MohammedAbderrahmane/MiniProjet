@@ -19,8 +19,8 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 public class ProfileActivity extends AppCompatActivity {
-final String ERROR_FETCH = "Error";
-    FirebaseUser user;
+
+    public FirebaseUser user;
     TextView nom,prenom,email;
     Button modifierMotpass_btn,deconnecter_btn;
 
