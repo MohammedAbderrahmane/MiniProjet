@@ -33,14 +33,9 @@ public class ConsulterCommandeActivity extends AppCompatActivity {
         noCommande = findViewById(R.id.consulter_commandes_no_commande);
         commandeRecycleView = findViewById(R.id.consulter_commandes_recycle_view);
 
-        if (commandes.isEmpty()){
-            noCommande.setVisibility(View.VISIBLE);
-            commandeRecycleView.setVisibility(View.GONE);
-        }else {
-            noCommande.setVisibility(View.GONE);
-            commandeRecycleView.setVisibility(View.VISIBLE);
-            setUpCommandesRecycleView();
-        }
+        setUpCommandesRecycleView();
+
+
 
 
     }
@@ -65,7 +60,14 @@ public class ConsulterCommandeActivity extends AppCompatActivity {
                                     )
                             );
                         }
-                        commandeAdapter.notifyDataSetChanged();
+                        if (commandes.isEmpty()){
+                            noCommande.setVisibility(View.VISIBLE);
+                            commandeRecycleView.setVisibility(View.GONE);
+                        }else {
+                            noCommande.setVisibility(View.GONE);
+                            commandeRecycleView.setVisibility(View.VISIBLE);
+                            commandeAdapter.notifyDataSetChanged();
+                        }
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {

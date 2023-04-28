@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.AppCompatButton;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -22,7 +23,7 @@ public class ProduitHolder extends RecyclerView.ViewHolder{
     ConstraintLayout modificationLayout;
     ImageButton modifierPhoto;
     EditText modifierPrix,modifierNom,modifierCategorie;
-    Button modifierBtn;
+    AppCompatButton modifierBtn;
     TextView modifierStatueImage;
 
     // ---

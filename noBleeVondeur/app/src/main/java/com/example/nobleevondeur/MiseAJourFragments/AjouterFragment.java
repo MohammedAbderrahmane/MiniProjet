@@ -20,6 +20,7 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.AppCompatButton;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
@@ -38,7 +39,7 @@ public class AjouterFragment extends Fragment {
 
     ImageButton photo;
     EditText prix,nom,categorie;
-    Button ajouter;
+    AppCompatButton ajouter;
     TextView statue_image;
     boolean imageSelected = false;
     Uri tmpImage;

@@ -40,6 +40,8 @@ public class GetAccessActivity extends AppCompatActivity {
         }
 
         try {
+            Toolbar tool_bar =findViewById(R.id.tool_bar);
+            setSupportActionBar(tool_bar);
         }catch (Exception e){
             Toast.makeText(this, e.toString(), Toast.LENGTH_SHORT).show();
         }

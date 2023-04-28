@@ -4,9 +4,51 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+    android:background="@drawable/general_background">
 
-    <Button
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#FFFFFFFF"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/tool_bar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/activity_background"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:title=" " />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Page d'accuel"
+                android:textColor="@color/black"
+                android:textSize="25dp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@+id/tool_bar"
+                app:layout_constraintEnd_toEndOf="@+id/tool_bar"
+                app:layout_constraintStart_toStartOf="@+id/tool_bar"
+                app:layout_constraintTop_toTopOf="@+id/tool_bar" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/main_profile"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -17,12 +59,13 @@
         android:paddingRight="14dp"
         android:text="Profile"
         android:textAllCaps="false"
-        android:textSize="15dp"
+        android:textSize="17dp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/main_bonjour" />
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/main_consulter"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -33,12 +76,13 @@
         android:paddingRight="17dp"
         android:text="Consullter la liste des commandes"
         android:textAllCaps="false"
-        android:textSize="15dp"
+        android:textSize="17dp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/main_profile" />
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/main_mise_a_jour"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -47,9 +91,10 @@
         android:drawableRight="@drawable/icon_edit"
         android:ems="15"
         android:paddingRight="17dp"
-        android:text="Mise a jour les produits"
+        android:text="Mise à jour les produits"
         android:textAllCaps="false"
-        android:textSize="15dp"
+        android:textSize="17dp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="@+id/main_profile"
         app:layout_constraintStart_toStartOf="@+id/main_profile"
         app:layout_constraintTop_toBottomOf="@+id/main_consulter" />
