@@ -4,7 +4,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent"
+    android:background="#00FFFFFF">
 
     <EditText
         android:id="@+id/ajouter_nom"
@@ -57,13 +58,18 @@
         app:layout_constraintStart_toStartOf="@+id/ajouter_prix"
         app:layout_constraintTop_toBottomOf="@+id/ajouter_prix" />
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/ajouter_ajouter_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="48dp"
+        android:padding="16dp"
+        android:drawablePadding="10dp"
+        android:textAllCaps="false"
+        android:textSize="17dp"
         android:background="@drawable/button_background"
         android:drawableRight="@drawable/user_1"
+        android:paddingRight="10dp"
         android:text="Ajouter produit"
         app:layout_constraintEnd_toEndOf="@+id/produit_modifier_btn"
         app:layout_constraintStart_toStartOf="@+id/produit_modifier_btn"

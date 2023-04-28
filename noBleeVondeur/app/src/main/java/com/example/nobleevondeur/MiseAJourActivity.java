@@ -1,6 +1,7 @@
 package com.example.nobleevondeur;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatButton;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 
@@ -20,7 +21,7 @@ public class MiseAJourActivity extends AppCompatActivity {
 
 
 
-    Button ajouter,modifier;
+    AppCompatButton ajouter,modifier;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

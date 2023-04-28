@@ -3,6 +3,7 @@ package com.example.nobleevondeur;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatButton;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -26,7 +27,7 @@ import java.util.Map;
 
 public class MagazinActivity extends AppCompatActivity {
 
-    Button modifier;
+    AppCompatButton modifier;
     ImageButton logout;
     EditText nomMagazin,nomVondeur,numTelephone;
     Map<String,String> MagazinData;

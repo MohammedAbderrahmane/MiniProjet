@@ -2,6 +2,7 @@ package com.example.nobleevondeur;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatButton;
 import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
@@ -18,7 +19,8 @@ import com.google.firebase.firestore.DocumentSnapshot;
 
 public class MainActivity extends AppCompatActivity {
 
-    Button miseAJour,consulter,profile;
+    AppCompatButton miseAJour,consulter,profile;
+
     TextView bonjour;
 
     @Override
