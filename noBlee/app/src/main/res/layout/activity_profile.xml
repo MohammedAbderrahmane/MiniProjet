@@ -6,81 +6,108 @@
     android:layout_height="match_parent"
     tools:context=".ProfileActivity">
 
-    <TextView
-        android:id="@+id/profile_nom1"
+    <EditText
+        android:id="@+id/profile_nom"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:text="nom :"
+        android:background="@drawable/edit_text_bg"
+        android:paddingVertical="10dp"
+        android:ems="10"
+        android:textAlignment="center"
+        android:inputType="textPersonName"
+        android:hint="Entrez votre nom"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+    <EditText
+        android:id="@+id/profile_prenom"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/edit_text_bg"
+        android:paddingVertical="10dp"
+        android:textAlignment="center"
+        android:inputType="textPersonName"
+        android:hint="Entrez votre prenome"
+        app:layout_constraintEnd_toEndOf="@+id/profile_nom"
+        app:layout_constraintStart_toStartOf="@+id/profile_nom"
+        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+
+    <EditText
+        android:id="@+id/profile_adresse"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/edit_text_bg"
+        android:paddingVertical="10dp"
+        android:textAlignment="center"
+        android:inputType="textPersonName"
+        android:hint="Entrez votre adresse"
+        app:layout_constraintEnd_toEndOf="@+id/profile_nom"
+        app:layout_constraintStart_toStartOf="@+id/profile_nom"
+        app:layout_constraintTop_toBottomOf="@+id/textView3" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/profile_modifier"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:background="@drawable/button_bg"
+        android:elevation="42dp"
+        android:translationZ="50dp"
+
+        android:paddingHorizontal="18dp"
+        android:paddingVertical="10dp"
+        android:text="Modifier les informations"
+
+        android:textAllCaps="false"
+        app:layout_constraintBottom_toBottomOf="@+id/profile_deconnecter"
+        app:layout_constraintEnd_toStartOf="@+id/profile_deconnecter"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageButton
+        android:id="@+id/profile_deconnecter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="30dp"
+        android:layout_marginBottom="30dp"
+        android:background="@drawable/image_button_bg"
+        android:padding="10dp"
+        android:src="@drawable/logout"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="100dp"
+        android:text="Nom :"
+        android:textSize="15dp"
+        android:textColor="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/profile_prenom1"
+        android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="prenom :"
-        app:layout_constraintEnd_toEndOf="@+id/profile_nom1"
-        app:layout_constraintStart_toStartOf="@+id/profile_nom1"
-        app:layout_constraintTop_toBottomOf="@+id/profile_nom1" />
+        android:layout_marginTop="30dp"
+        android:text="Prenom :"
+        android:textSize="15dp"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/profile_nom" />
 
     <TextView
-        android:id="@+id/profile_email1"
+        android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="email :"
-        app:layout_constraintEnd_toEndOf="@+id/profile_prenom1"
-        app:layout_constraintStart_toStartOf="@+id/profile_prenom1"
-        app:layout_constraintTop_toBottomOf="@+id/profile_prenom1" />
-
-    <TextView
-        android:id="@+id/profile_motapsse1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text=" motpasse :"
-        app:layout_constraintEnd_toEndOf="@+id/profile_email1"
-        app:layout_constraintStart_toStartOf="@+id/profile_email1"
-        app:layout_constraintTop_toBottomOf="@+id/profile_email1" />
-
-    <Button
-        android:id="@+id/profile_deconnecter_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Deconecter"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
-
-    <TextView
-        android:id="@+id/profile_nom2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="@+id/profile_nom1"
-        app:layout_constraintStart_toEndOf="@+id/profile_nom1"
-        app:layout_constraintTop_toTopOf="@+id/profile_nom1" />
-
-    <TextView
-        android:id="@+id/profile_prenom2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="@+id/profile_prenom1"
-        app:layout_constraintStart_toEndOf="@+id/profile_prenom1"
-        app:layout_constraintTop_toBottomOf="@+id/profile_nom1" />
-
-    <TextView
-        android:id="@+id/profile_email2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="@+id/profile_email1"
-        app:layout_constraintStart_toEndOf="@+id/profile_email1"
-        app:layout_constraintTop_toTopOf="@+id/profile_email1" />
-
-    <Button
-        android:id="@+id/profile_modifierMotpasse_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="modifieer motpasse"
-        app:layout_constraintStart_toStartOf="@+id/profile_motapsse1"
-        app:layout_constraintTop_toBottomOf="@+id/profile_motapsse1" />
-
+        android:layout_marginTop="30dp"
+        android:text="Adresse :"
+        android:textSize="15dp"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/profile_prenom" />
 </androidx.constraintlayout.widget.ConstraintLayout>

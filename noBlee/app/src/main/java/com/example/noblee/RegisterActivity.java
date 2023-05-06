@@ -97,13 +97,13 @@ public class RegisterActivity extends AppCompatActivity {
                                             @Override
                                             public void onSuccess(Void unused) {
                                                 finish();
-                                                startActivity (new Intent(RegisterActivity.this, MainActivity.class));
+                                                startActivity (new Intent(RegisterActivity.this, LoginActivity.class));
                                             }
                                         })
                                         .addOnFailureListener(new OnFailureListener() {
                                             @Override
                                             public void onFailure(@NonNull Exception e) {
-                                                Toast.makeText(RegisterActivity.this,"Failed : "+e.toString(),Toast.LENGTH_SHORT).show();
+                                                Toast.makeText(RegisterActivity.this,e.toString(),Toast.LENGTH_SHORT).show();
                                             }
                                         });
                             }else{
@@ -129,13 +129,17 @@ public class RegisterActivity extends AppCompatActivity {
                 a.setEnabled(false);
                 statue.setText("All fields must be filled");
                 statue.setVisibility(View.VISIBLE);
+            }else if (psw.getText().toString().length() < 7){
+                a.setEnabled(false);
+                statue.setText("password must be more then 7 letters");
+                statue.setVisibility(View.VISIBLE);
             }else if (!psw.getText().toString().equals(cpsw.getText().toString())){
                 a.setEnabled(false);
                 statue.setText("Password must be identical");
                 statue.setVisibility(View.VISIBLE);
             }else{
                 a.setEnabled(true);
-                statue.setVisibility(View.GONE);
+                statue.setVisibility(View.INVISIBLE);
             }
         }
 

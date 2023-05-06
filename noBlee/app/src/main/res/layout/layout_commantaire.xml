@@ -13,15 +13,34 @@
         android:text="user : "
         android:textSize="15dp"
         android:textStyle="bold"
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/commantaire_contenu"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:text="jhqfhshdsjhhjd"
+        android:layout_height="0dp"
         android:layout_marginLeft="10dp"
-        app:layout_constraintStart_toEndOf="@+id/commantaire_user" />
+        android:text="contenue"
+        android:textSize="15dp"
+        android:textStyle="italic"
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/commantaire_modirateur"
+        app:layout_constraintStart_toEndOf="@+id/commantaire_user"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageButton
+        android:id="@+id/commantaire_modirateur"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="10dp"
+        android:visibility="invisible"
+        android:background="@drawable/image_button_bg"
+        android:padding="5dp"
+        android:src="@drawable/icon_delete"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

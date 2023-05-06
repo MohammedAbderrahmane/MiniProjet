@@ -2,12 +2,15 @@ package com.example.noblee.NonActivityClasses.RecycleViewCommantaire;
 
 import android.content.Context;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.noblee.NonActivityClasses.User;
 import com.example.noblee.R;
+import com.google.firebase.firestore.DocumentReference;
 
 import java.util.List;
 
@@ -33,6 +36,29 @@ public class CommantaireAdapter extends RecyclerView.Adapter<CommantaireHolder> 
         holder.user.setText(commantaire.getUser());
         holder.contenu.setText(commantaire.getContenu());
 
+        setUpModirateur(holder);
+
+        holder.modirateurSupprimer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                deleteCommantaire(commantaire.reference,position);
+            }
+        });
+
+    }
+
+    private void setUpModirateur(CommantaireHolder holder) {
+        if (User.getInstance().isMod()){
+            holder.modirateurSupprimer.setVisibility(View.VISIBLE);
+            return;
+        }
+        holder.modirateurSupprimer.setVisibility(View.INVISIBLE);
+    }
+
+    private void deleteCommantaire(DocumentReference reference, int position) {
+        commantaires.remove(position);
+        notifyDataSetChanged();
+        reference.delete();
     }
 
 

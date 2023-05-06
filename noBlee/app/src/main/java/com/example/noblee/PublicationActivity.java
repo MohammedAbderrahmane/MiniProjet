@@ -1,5 +1,6 @@
 package com.example.noblee;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -16,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.noblee.NonActivityClasses.FireBase;
 import com.example.noblee.NonActivityClasses.RecycleViewPublication.ItemPublication;
 import com.example.noblee.NonActivityClasses.RecycleViewPublication.PublicationAdapter;
+import com.example.noblee.NonActivityClasses.User;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -41,7 +43,13 @@ public class PublicationActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_publication);
 
-
+        if (FirebaseAuth.getInstance().getCurrentUser() == null) {
+            Intent goLogin = new Intent(this, LoginActivity.class);
+            goLogin.putExtra("currentPage",LoginActivity.TO_PUBLICATION);
+            finish();
+            startActivity(goLogin);
+            return;
+        }
 
         newPublication = findViewById(R.id.publication_new_publication_edit_text);
         ajouterNewPublication = findViewById(R.id.publication_new_publication_ajouter);
@@ -70,8 +78,6 @@ public class PublicationActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 ajouterPublication(newPublication.getText().toString().trim());
-
-
             }
         });
 
@@ -84,7 +90,7 @@ public class PublicationActivity extends AppCompatActivity {
                 .collection(FireBase.PUBLICATION)
                 .add(
                         new ItemPublication(
-                                FirebaseAuth.getInstance().getCurrentUser().getEmail(),
+                                User.getInstance().getNom() + " " + User.getInstance().getPrenom(),
                                 contenu,
                                 new Date(),
                                 String.valueOf(0),
@@ -108,12 +114,9 @@ public class PublicationActivity extends AppCompatActivity {
     }
 
     void setUpRecycleView(){
-
-
         PublicationAdapter publicationAdapter = new PublicationAdapter(this,publications = new ArrayList<>());
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(publicationAdapter);
-
         FirebaseFirestore.getInstance()
                 .collection(FireBase.PUBLICATION)
                 .get()

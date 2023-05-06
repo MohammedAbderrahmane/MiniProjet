@@ -6,20 +6,36 @@
     android:layout_height="match_parent"
     tools:context=".CommandeActivity">
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/commande_confirme"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="25dp"
+        android:background="@drawable/button_bg"
+        android:elevation="42dp"
+        android:translationZ="50dp"
+        android:paddingHorizontal="20dp"
+        android:paddingVertical="15dp"
         android:text="Confirme Commande"
+        android:textAllCaps="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/commande_annuler" />
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/commande_annuler"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginBottom="25dp"
+        android:background="@drawable/button_bg"
+        android:elevation="42dp"
+        android:translationZ="50dp"
+        android:paddingHorizontal="20dp"
+        android:paddingVertical="15dp"
         android:text="Annuler Commande"
+        android:textAllCaps="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -27,6 +43,7 @@
         android:id="@+id/commande_pagnies"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/commande_description" />
@@ -35,27 +52,38 @@
         android:id="@+id/commande_description"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="les produit doit etre d'un magazin seulment"
+        android:layout_marginTop="30dp"
+        android:text="Vous trouver votre pagnies engentreé ici"
+        android:textColor="@color/black"
+        android:textSize="17dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageButton
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/commande_ajouter"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
+        android:background="@drawable/button_bg"
+        android:elevation="42dp"
+        android:translationZ="50dp"
+        android:paddingHorizontal="18dp"
+        android:paddingVertical="10dp"
+        android:text="Consulter Autre produits"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/commande_pagnies"
-        app:srcCompat="@drawable/ic_action_name" />
+        app:layout_constraintTop_toBottomOf="@+id/commande_pagnies" />
 
     <TextView
         android:id="@+id/commande_prix_total"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
         android:text="Le prix Total : "
+        android:textColor="@color/black"
+        android:textSize="17dp"
         app:layout_constraintBottom_toTopOf="@+id/commande_confirme"
-        app:layout_constraintEnd_toEndOf="@+id/commande_confirme"
         app:layout_constraintStart_toStartOf="@+id/commande_confirme" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

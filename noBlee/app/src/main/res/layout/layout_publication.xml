@@ -4,14 +4,21 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="#FF44"
-    android:layout_marginVertical="7dp">
+    android:background="@drawable/button_bg"
+    android:elevation="@dimen/activity_horizontal_margin"
+    android:layout_marginTop="20dp"
+    >
 
     <TextView
         android:id="@+id/pub_auteur"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="15dp"
         android:text="nomDePersone"
+        android:textColor="@color/black"
+        android:textSize="15dp"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -19,7 +26,12 @@
         android:id="@+id/pub_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="3dp"
+        android:layout_marginLeft="15dp"
         android:text="dateDePost"
+        android:textColor="@color/black"
+        android:textSize="15dp"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/pub_auteur" />
 
@@ -27,6 +39,7 @@
         android:id="@+id/constraintLayout2"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
         android:paddingHorizontal="15dp"
         android:paddingVertical="30dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -39,38 +52,53 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:text="Contenu de publictaion"
+            android:textColor="@color/black"
+            android:textSize="20dp"
+            android:textStyle="italic"
+            android:textAlignment="center"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/constraintLayout2"
-        tools:layout_editor_absoluteX="16dp">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout2">
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/pub_like"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="0" />
+            android:background="@drawable/button_bg"
+            android:drawableLeft="@drawable/like"
+            android:elevation="@dimen/activity_horizontal_margin"
+            android:paddingLeft="15dp"
+            android:text="0"
+            android:translationZ="@dimen/activity_horizontal_margin" />
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/pub_dislike"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:background="@drawable/button_bg"
+            android:drawableLeft="@drawable/dislike"
+            android:paddingLeft="15dp"
             android:text="0" />
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/pub_commanter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="8"
+            android:background="@drawable/button_bg"
             android:text="Commanteaire" />
     </LinearLayout>
 
@@ -78,7 +106,10 @@
         android:id="@+id/commantaire_constraint_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout"
         tools:visibility="visible">
 
@@ -92,20 +123,27 @@
 
             <EditText
                 android:id="@+id/pub_new_commantaire"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:ems="15"
-                android:hint="cree un nouveau commantaire ici" />
+                android:background="@drawable/edit_text_bg"
+                android:hint="cree un nouveau commantaire ici"
+                android:paddingVertical="12dp"
+                android:paddingLeft="20dp"
+                app:layout_constraintEnd_toStartOf="@+id/pub_ajouter_commantaire"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <ImageButton
                 android:id="@+id/pub_ajouter_commantaire"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:src="@drawable/ic_action_delete"
-                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/image_button_bg"
+                android:padding="10dp"
+                android:src="@drawable/send"
+                app:layout_constraintBottom_toBottomOf="@+id/pub_new_commantaire"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/pub_new_commantaire"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="@+id/pub_new_commantaire" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -113,10 +151,27 @@
             android:id="@+id/pub_commantaires"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginHorizontal="5dp"
+            android:layout_marginTop="10dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/commanitaire_cree" />
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <ImageButton
+        android:id="@+id/pub_modirateur"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="20dp"
+        android:visibility="invisible"
+        android:background="@drawable/image_button_bg"
+        android:padding="10dp"
+        android:src="@drawable/icon_delete"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

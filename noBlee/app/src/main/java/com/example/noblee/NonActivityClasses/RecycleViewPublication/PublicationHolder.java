@@ -1,12 +1,12 @@
 package com.example.noblee.NonActivityClasses.RecycleViewPublication;
 
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.AppCompatButton;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.noblee.R;
@@ -14,8 +14,8 @@ import com.example.noblee.R;
 public class PublicationHolder extends RecyclerView.ViewHolder {
 
     TextView auteur,date,contenu;
-    Button like,dislike,commanter;
-    ImageButton ajouterNewCommantaire;
+    AppCompatButton like,dislike,commanter;
+    ImageButton ajouterNewCommantaire,modirateurSupprimer;
 
     EditText newCommantaire;
     RecyclerView commantaireRecycleView;
@@ -26,6 +26,7 @@ public class PublicationHolder extends RecyclerView.ViewHolder {
 
         auteur = itemView.findViewById(R.id.pub_auteur);
         date = itemView.findViewById(R.id.pub_date);
+        modirateurSupprimer = itemView.findViewById(R.id.pub_modirateur);
         contenu = itemView.findViewById(R.id.pub_contenu);
         like = itemView.findViewById(R.id.pub_like);
         dislike = itemView.findViewById(R.id.pub_dislike);

@@ -6,10 +6,27 @@
     android:layout_height="match_parent"
     tools:context=".LoginActivity">
 
-    <Button
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="100dp"
+        android:text="Entrer votre informations"
+        android:textSize="20dp"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/login_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
+        android:background="@drawable/button_bg"
+        android:paddingHorizontal="8dp"
+        android:elevation="42dp"
+        android:translationZ="50dp"
         android:text="Login"
         app:layout_constraintEnd_toEndOf="@+id/login_motpass_ed"
         app:layout_constraintHorizontal_bias="0.491"
@@ -20,17 +37,27 @@
         android:id="@+id/login_email_ed"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/edit_text_bg"
         android:ems="10"
+        android:hint="Entrez votre email"
         android:inputType="textEmailAddress"
+        android:paddingVertical="15dp"
+        android:paddingLeft="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/textView4" />
 
     <EditText
         android:id="@+id/login_motpass_ed"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:paddingVertical="15dp"
+        android:paddingLeft="10dp"
+        android:background="@drawable/edit_text_bg"
         android:ems="10"
+        android:hint="Entrez le motpasse"
         android:inputType="textPassword"
         app:layout_constraintEnd_toEndOf="@+id/login_email_ed"
         app:layout_constraintStart_toStartOf="@+id/login_email_ed"
@@ -40,8 +67,11 @@
         android:id="@+id/to_registerActivity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="7dp"
-        android:text="Dont have accouunt , Register here"
+        android:layout_marginTop="30dp"
+        android:text="Dont have accouunt\nRegister here"
+        android:textSize="20dp"
+        android:textAlignment="center"
+        android:textColor="@color/black"
         app:layout_constraintEnd_toEndOf="@+id/login_btn"
         app:layout_constraintStart_toStartOf="@+id/login_btn"
         app:layout_constraintTop_toBottomOf="@+id/login_btn" />
@@ -51,6 +81,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="gone"
+        android:layout_marginTop="10dp"
+        android:text="Erreur"
+        android:textSize="17dp"
+        android:textColor="#FFAA0000"
+        app:layout_constraintEnd_toEndOf="@+id/login_motpass_ed"
+        app:layout_constraintStart_toStartOf="@+id/login_motpass_ed"
         app:layout_constraintTop_toBottomOf="@+id/login_motpass_ed"
-        tools:layout_editor_absoluteX="175dp" />
+        tools:visibility="visible" />
 </androidx.constraintlayout.widget.ConstraintLayout>

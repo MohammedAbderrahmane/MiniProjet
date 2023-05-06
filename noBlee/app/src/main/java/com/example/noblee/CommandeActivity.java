@@ -3,13 +3,12 @@ package com.example.noblee;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatButton;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -30,8 +29,7 @@ import java.util.Date;
 public class CommandeActivity extends AppCompatActivity {
 
     RecyclerView a;
-    Button confirme,annuler;
-    ImageButton ajouter;
+    AppCompatButton ajouter,confirme,annuler;
     TextView decripption,prixTotal;
     PagnieAdapter pagnieAdapter;
 
@@ -39,6 +37,14 @@ public class CommandeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_commande);
+
+        if (FirebaseAuth.getInstance().getCurrentUser() == null) {
+            Intent goLogin = new Intent(this, LoginActivity.class);
+            goLogin.putExtra("currentPage",LoginActivity.TO_COMMANDE);
+            finish();
+            startActivity(goLogin);
+            return;
+        }
 
         SavedPagniesDb.getInstance(getApplicationContext()).setUpListPagnie();
 

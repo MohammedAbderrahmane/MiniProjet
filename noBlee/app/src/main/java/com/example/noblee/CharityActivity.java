@@ -24,9 +24,11 @@ import java.math.BigDecimal;
 
 public class CharityActivity extends AppCompatActivity {
 
+    final private String CLIENT_ID = "AYOrF9Rjc4ntL1PRIsrJDAHslQeRtRXVc2kCLWd8QloKOplFpcKo6nVcnK2uCaQiaKGnBjkxMTmzSsNw";
+
     private PayPalConfiguration config = new PayPalConfiguration()
             .environment(PayPalConfiguration.ENVIRONMENT_SANDBOX)
-            .clientId("AYgW1qySGyqGNc34sEk51Q7HOkrTm2NgVf8YP25md9pArRntnyYfPe_KPcdFSjMi1972PDIQZBSuRYiF");
+            .clientId(CLIENT_ID);
 
     EditText sommeArgent;
     Button paymentBtn;
