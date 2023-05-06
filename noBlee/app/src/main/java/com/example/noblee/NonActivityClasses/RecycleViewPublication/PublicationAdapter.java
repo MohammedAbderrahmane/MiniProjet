@@ -15,8 +15,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.noblee.NonActivityClasses.FireBase;
 import com.example.noblee.NonActivityClasses.RecycleViewCommantaire.CommantaireAdapter;
 import com.example.noblee.NonActivityClasses.RecycleViewCommantaire.ItemCommantaire;
+import com.example.noblee.NonActivityClasses.User;
 import com.example.noblee.R;
-import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
@@ -24,7 +24,9 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class PublicationAdapter extends RecyclerView.Adapter<PublicationHolder> {
 
@@ -47,16 +49,21 @@ public class PublicationAdapter extends RecyclerView.Adapter<PublicationHolder> 
     public void onBindViewHolder(@NonNull PublicationHolder holder, int position) {
         ItemPublication publication = publications.get(position);
 
-
-
         holder.auteur.setText(publication.getAuteur());
         holder.date.setText(publication.calculerDate());
         holder.contenu.setText(publication.getContenu());
         holder.like.setText(publication.getNumLike());
         holder.dislike.setText(publication.getNumDislike());
 
+        setUpModirateur(holder);
+        //updateLikeDislike(publication);
 
-
+        holder.modirateurSupprimer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                deletePublication(publication.getReference(),position);
+            }
+        });
 
         holder.like.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -84,7 +91,6 @@ public class PublicationAdapter extends RecyclerView.Adapter<PublicationHolder> 
             }
         });
 
-
         holder.ajouterNewCommantaire.setEnabled(false);
         holder.newCommantaire.addTextChangedListener(new TextWatcher() {
             @Override
@@ -98,20 +104,37 @@ public class PublicationAdapter extends RecyclerView.Adapter<PublicationHolder> 
             @Override
             public void afterTextChanged(Editable editable) {}
         });
+
         holder.ajouterNewCommantaire.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ajouterUnCommantaire(holder.newCommantaire.getText().toString(),publication);
+                ajouterUnCommantaire(holder,holder.newCommantaire.getText().toString(),publication);
+            }
+        });
+    }
+
+    private void setUpModirateur(PublicationHolder holder) {
+        if (User.getInstance().isMod()){
+            holder.modirateurSupprimer.setVisibility(View.VISIBLE);
+            return;
+        }
+        holder.modirateurSupprimer.setVisibility(View.INVISIBLE);
+    }
+
+    private void deletePublication(DocumentReference reference, int position) {
+        reference.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void unused) {
+                publications.remove(position);
+                notifyDataSetChanged();
             }
         });
     }
 
     private void setUpCommantaires(ItemPublication publication, PublicationHolder holder) {
-
         CommantaireAdapter commantaireAdapter = new CommantaireAdapter(context,commantaires = new ArrayList<>());
         holder.commantaireRecycleView.setLayoutManager(new LinearLayoutManager(context));
         holder.commantaireRecycleView.setAdapter(commantaireAdapter);
-
         publication.getReference()
                 .collection(FireBase.PUB_COMMANTAIRE)
                 .get()
@@ -122,38 +145,37 @@ public class PublicationAdapter extends RecyclerView.Adapter<PublicationHolder> 
                             commantaires.add(
                                     new ItemCommantaire(
                                             document.getString("user"),
-                                            document.getString("contenu")
+                                            document.getString("contenu"),
+                                            document.getReference()
                                     )
                             );
                         }
                         holder.commantaireRecycleView.getAdapter().notifyDataSetChanged();
                     }
                 });
-
-
-
-
     }
 
-    private void ajouterUnCommantaire(String newCommantaire, ItemPublication publication) {
+    private void ajouterUnCommantaire(PublicationHolder holder, String newCommantaire, ItemPublication publication) {
         publication.getReference()
                 .collection(FireBase.PUB_COMMANTAIRE)
                 .add(
                         new ItemCommantaire(
-                        FirebaseAuth.getInstance().getCurrentUser().getEmail(),
+                        User.getInstance().getNom() + " " + User.getInstance().getPrenom(),
                         newCommantaire
                         )
                 ).
                 addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                     @Override
                     public void onSuccess(DocumentReference reference) {
+                        holder.ajouterNewCommantaire.setEnabled(false);
+                        holder.newCommantaire.setText("");
+                        holder.commantaireRecycleView.getAdapter().notifyDataSetChanged();
                         Toast.makeText(context, "commantaire ajouté", Toast.LENGTH_SHORT).show();
                     }
                 });
     }
 
     void attemptLike(ItemPublication publication, boolean isItLike){
-
         String currentUser = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
         publication.getReference()
@@ -176,93 +198,68 @@ public class PublicationAdapter extends RecyclerView.Adapter<PublicationHolder> 
 
     private void inverseLike(ItemPublication publication, boolean isItLike, QuerySnapshot queryDocumentSnapshots) {
         if (isItLike) {
-            publication.subLike();
             queryDocumentSnapshots.getDocuments().get(0).getReference().delete();
-            notifyDataSetChanged();
+            updateLikeDislike(publication);
             return;
         }
-        publication.subNumDislike();
         queryDocumentSnapshots.getDocuments().get(0).getReference().delete();
-        notifyDataSetChanged();
-
+        updateLikeDislike(publication);
     }
 
-
     private void addLike(ItemPublication publication, boolean isItLike) {
-        try {
-            String currentUser = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        String currentUser = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
             // delleting confilct like/dislike
 
-            publication.getReference()
-                    .collection((isItLike ? FireBase.PUB_DISLIKE : FireBase.PUB_LIKE))
-                    .whereEqualTo(FireBase.REACTOR, currentUser)
-                    .get()
-                    .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-                        @Override
-                        public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                            if (queryDocumentSnapshots.getDocuments().isEmpty())
-                                return;
+        publication.getReference()
+                .collection((isItLike ? FireBase.PUB_DISLIKE : FireBase.PUB_LIKE))
+                .whereEqualTo(FireBase.REACTOR, currentUser)
+                .get()
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                        if (!queryDocumentSnapshots.getDocuments().isEmpty()){
                             queryDocumentSnapshots.getDocuments().get(0).getReference().delete();
-                            if (isItLike) {
-                                publication.subNumDislike();
-                                publication.getReference().update(
-                                        FireBase.PUB_NUM_DISLIKE,
-                                        publication.getNumDislike()
-                                );
-                                notifyDataSetChanged();
-                                return;
-                            }
-                            publication.subLike();
-                            publication.getReference().update(
-                                    FireBase.PUB_NUM_LIKE,
-                                    publication.getNumLike()
-                            );
-                            notifyDataSetChanged();
+                            updateLikeDislike(publication);
                         }
-                    })
-                    .addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            Toast.makeText(context, "fialed to delete", Toast.LENGTH_SHORT).show();
-                        }
-                    });
+                    }
+                });
 
 
             // add like/dislike
-            publication.getReference()
-                    .collection(isItLike ? FireBase.PUB_LIKE : FireBase.PUB_DISLIKE)
-                    .add(new Like(currentUser))
-                    .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                        @Override
-                        public void onSuccess(DocumentReference reference) {
-                            if (isItLike) {
-                                publication.addLike();
-                                publication.getReference().update(
-                                        FireBase.PUB_NUM_LIKE,
-                                        publication.getNumLike()
-                                );
-                                notifyDataSetChanged();
-                                return;
-                            }
-                            publication.addDislike();
-                            publication.getReference().update(
-                                    FireBase.PUB_NUM_DISLIKE,
-                                    publication.getNumLike()
-                            );
-                            notifyDataSetChanged();
+        publication.getReference()
+                .collection(isItLike ? FireBase.PUB_LIKE : FireBase.PUB_DISLIKE)
+                .add(new Like(currentUser))
+                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                    @Override
+                    public void onSuccess(DocumentReference reference) {
+                        updateLikeDislike(publication);
+                    }
+                });
 
-                        }
-                    })
-                    .addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            Toast.makeText(context, "failed", Toast.LENGTH_SHORT).show();
-                        }
-                    });
-        }catch (Exception e){
-            Toast.makeText(context, e.toString(), Toast.LENGTH_SHORT).show();
-        }
+    }
+
+    private void updateLikeDislike(ItemPublication publication){
+        Map<String,Object> update = new HashMap<>();
+        // TODO : contineue
+        publication.getReference().collection(FireBase.PUB_LIKE).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+            @Override
+            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                publication.setNumLike(String.valueOf(queryDocumentSnapshots.size()));
+                update.put(FireBase.PUB_NUM_LIKE,publication.getNumLike());
+                publication.getReference().collection(FireBase.PUB_DISLIKE).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                        publication.setNumDislike(String.valueOf(queryDocumentSnapshots.size()));
+                        update.put(FireBase.PUB_NUM_DISLIKE,publication.getNumDislike());
+                        publication.getReference().update(update);
+                        notifyDataSetChanged();
+                    }
+                });
+            }
+        });
+
+
     }
 
     @Override

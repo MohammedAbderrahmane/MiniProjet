@@ -82,27 +82,5 @@ public class ItemPublication {
         this.reference = reference;
     }
 
-    public void subNumDislike() {
-        numDislike = String.valueOf(
-                Integer.parseInt(numDislike) - 1
-        );
-    }
 
-    public void subLike() {
-        numLike = String.valueOf(
-                Integer.parseInt(numLike) - 1
-        );
-    }
-
-    public void addLike() {
-        numLike = String.valueOf(
-                Integer.parseInt(numLike) + 1
-        );
-    }
-
-    public void addDislike() {
-        numDislike = String.valueOf(
-                Integer.parseInt(numDislike) + 1
-        );
-    }
 }
