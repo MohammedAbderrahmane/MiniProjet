@@ -3,7 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@drawable/button_bg"
+    android:padding="10dp">
 
     <SeekBar
         android:id="@+id/dialog_quentite_seekbar"
@@ -13,13 +15,17 @@
         android:max="10"
         android:progress="0"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/dialog_quentite_textview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
         android:text="La quentité selectioné :"
+        android:textColor="@color/black"
+        android:textSize="17dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/dialog_quentite_seekbar" />
@@ -28,9 +34,12 @@
         android:id="@+id/dialog_quentite_quentite"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:ems="10"
+        android:layout_marginTop="10dp"
+        android:ems="3"
         android:inputType="number"
         android:text="1"
+        android:background="@drawable/button_bg"
+        android:paddingVertical="10dp"
         android:textAlignment="center"
         app:layout_constraintEnd_toEndOf="@+id/dialog_quentite_textview"
         app:layout_constraintStart_toStartOf="@+id/dialog_quentite_textview"
@@ -40,10 +49,14 @@
         android:id="@+id/dialog_quentite_statue"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         android:text="TextView"
+        android:textSize="15dp"
+        android:textColor="@color/red"
         android:visibility="gone"
         app:layout_constraintEnd_toEndOf="@+id/dialog_quentite_quentite"
         app:layout_constraintStart_toStartOf="@+id/dialog_quentite_quentite"
-        app:layout_constraintTop_toBottomOf="@+id/dialog_quentite_quentite" />
+        app:layout_constraintTop_toBottomOf="@+id/dialog_quentite_quentite"
+        tools:visibility="visible" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

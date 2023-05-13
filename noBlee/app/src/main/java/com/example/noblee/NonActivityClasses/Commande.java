@@ -4,7 +4,7 @@ import com.google.firebase.Timestamp;
 
 public class Commande {
     Timestamp date;
-    String malade,prixTotal;
+    String adress,prixTotal;
 
     public Timestamp getDate() {
         return date;
@@ -15,11 +15,11 @@ public class Commande {
     }
 
     public String getMalade() {
-        return malade;
+        return adress;
     }
 
     public void setMalade(String malade) {
-        this.malade = malade;
+        this.adress = malade;
     }
 
     public String getPrixTotal() {
@@ -32,7 +32,7 @@ public class Commande {
 
     public Commande(Timestamp now, String userId, String prixTotal) {
         this.date = now;
-        this.malade = userId;
+        this.adress = userId;
         this.prixTotal = prixTotal;
     }
 }

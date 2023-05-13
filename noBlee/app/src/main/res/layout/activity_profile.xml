@@ -6,6 +6,70 @@
     android:layout_height="match_parent"
     tools:context=".ProfileActivity">
 
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBarLayout"
+        android:background="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/tool_bar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:title=" " />
+
+            <TextView
+                android:id="@+id/textView5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Page de profile"
+                android:textColor="@color/black"
+                android:textSize="25dp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@+id/tool_bar"
+                app:layout_constraintEnd_toEndOf="@+id/tool_bar"
+                app:layout_constraintStart_toStartOf="@+id/tool_bar"
+                app:layout_constraintTop_toTopOf="@+id/tool_bar" />
+
+            <ImageButton
+                android:id="@+id/profile_return"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:padding="10dp"
+                android:background="@drawable/image_button_bg"
+                android:src="@drawable/returna"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/tool_bar"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageButton
+                android:id="@+id/profile_deconnecter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="15dp"
+                android:background="@drawable/image_button_bg"
+                android:padding="10dp"
+                android:src="@drawable/logout"
+                app:layout_constraintBottom_toBottomOf="@+id/tool_bar"
+                app:layout_constraintEnd_toEndOf="@+id/tool_bar"
+                app:layout_constraintTop_toTopOf="@+id/tool_bar" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </com.google.android.material.appbar.AppBarLayout>
+
     <EditText
         android:id="@+id/profile_nom"
         android:layout_width="wrap_content"
@@ -51,41 +115,30 @@
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:background="@drawable/button_bg"
+        android:layout_marginBottom="40dp"
         android:elevation="42dp"
-        android:translationZ="50dp"
-
         android:paddingHorizontal="18dp"
+
         android:paddingVertical="10dp"
         android:text="Modifier les informations"
-
         android:textAllCaps="false"
-        app:layout_constraintBottom_toBottomOf="@+id/profile_deconnecter"
-        app:layout_constraintEnd_toStartOf="@+id/profile_deconnecter"
-        app:layout_constraintStart_toStartOf="parent" />
 
-    <ImageButton
-        android:id="@+id/profile_deconnecter"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginRight="30dp"
-        android:layout_marginBottom="30dp"
-        android:background="@drawable/image_button_bg"
-        android:padding="10dp"
-        android:src="@drawable/logout"
+        android:translationZ="50dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="30dp"
         android:text="Nom :"
-        android:textSize="15dp"
         android:textColor="@color/black"
+        android:textSize="15dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/imageView2" />
 
     <TextView
         android:id="@+id/textView2"
@@ -110,4 +163,16 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/profile_prenom" />
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:background="@drawable/image_button_bg"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="50dp"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/appBarLayout"
+        app:srcCompat="@drawable/logo1" />
 </androidx.constraintlayout.widget.ConstraintLayout>

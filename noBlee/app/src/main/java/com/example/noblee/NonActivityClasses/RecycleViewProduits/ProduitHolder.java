@@ -12,15 +12,18 @@ import com.example.noblee.R;
 
 public class ProduitHolder extends RecyclerView.ViewHolder {
 
-    TextView nomProduit,prixProduit;
+    public TextView nom;
+    public TextView prix;
+    public TextView categorie;
     ImageButton ajouterAuPagnie;
-    ImageView imageProduit;
+    public ImageView image;
 
     public ProduitHolder(@NonNull View itemView) {
         super(itemView);
-        nomProduit = itemView.findViewById(R.id.produit_nom_text);
-        prixProduit = itemView.findViewById(R.id.produit_prix_text);
-        ajouterAuPagnie = itemView.findViewById(R.id.produit_buy_btn);
-        imageProduit = itemView.findViewById(R.id.produit_image);
+        nom = itemView.findViewById(R.id.produit_nom);
+        prix = itemView.findViewById(R.id.produit_prix);
+        categorie = itemView.findViewById(R.id.produit_categorie);
+        ajouterAuPagnie = itemView.findViewById(R.id.produit_buy);
+        image = itemView.findViewById(R.id.produit_image);
     }
 }

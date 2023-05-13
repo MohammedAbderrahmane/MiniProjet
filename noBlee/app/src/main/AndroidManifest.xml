@@ -13,6 +13,17 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.NoBlee"
         tools:targetApi="31">
+
+        <meta-data
+            android:name="com.braintreepayments.api.tnvvzj5v3kzp5vvd"
+            android:value="tnvvzj5v3kzp5vvd" />
+        <meta-data
+            android:name="com.braintreepayments.api.ykh7dx95bbsn9jbm"
+            android:value="ykh7dx95bbsn9jbm" />
+        <meta-data
+            android:name="com.braintreepayments.api.d6dcf1f07b52879d6d0944e1e05e72ad"
+            android:value="d6dcf1f07b52879d6d0944e1e05e72ad" />
+
         <activity
             android:name=".PublicationActivity"
             android:exported="false" />

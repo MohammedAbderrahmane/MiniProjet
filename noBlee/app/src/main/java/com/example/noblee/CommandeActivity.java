@@ -1,22 +1,23 @@
 package com.example.noblee;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.noblee.NonActivityClasses.Commande;
+import com.example.noblee.NonActivityClasses.GestionDeMagazin;
 import com.example.noblee.NonActivityClasses.RecycleViewPagnie.ItemPagnie;
 import com.example.noblee.NonActivityClasses.RecycleViewPagnie.PagnieAdapter;
-import com.example.noblee.NonActivityClasses.SavedPagniesDb;
-import com.google.android.gms.tasks.OnFailureListener;
+import com.example.noblee.NonActivityClasses.GestionDePagnies;
+import com.example.noblee.NonActivityClasses.User;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
@@ -28,7 +29,7 @@ import java.util.Date;
 
 public class CommandeActivity extends AppCompatActivity {
 
-    RecyclerView a;
+    RecyclerView recyclerView;
     AppCompatButton ajouter,confirme,annuler;
     TextView decripption,prixTotal;
     PagnieAdapter pagnieAdapter;
@@ -46,23 +47,27 @@ public class CommandeActivity extends AppCompatActivity {
             return;
         }
 
-        SavedPagniesDb.getInstance(getApplicationContext()).setUpListPagnie();
 
-        a = findViewById(R.id.commande_pagnies);
+
+        recyclerView = findViewById(R.id.commande_pagnies);
         confirme = findViewById(R.id.commande_confirme);
         annuler = findViewById(R.id.commande_annuler);
         ajouter = findViewById(R.id.commande_ajouter);
         decripption = findViewById(R.id.commande_description);
         prixTotal = findViewById(R.id.commande_prix_total);
 
-        pagnieAdapter = new PagnieAdapter(CommandeActivity.this);
-        a.setLayoutManager(new LinearLayoutManager(this));
-        a.setAdapter(pagnieAdapter);
+        setUpRecycleView();
+
+
 
         confirme.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 // TODO : confimation de commande
+                if (GestionDePagnies.pagnies.isEmpty()) {
+                    Toast.makeText(CommandeActivity.this, "Ajoutez au pagnie d'abord", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 ajouterCommande();
             }
         });
@@ -71,9 +76,9 @@ public class CommandeActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 // TODO : confimation de annuler
-                SavedPagniesDb.getInstance(getApplicationContext()).viderPagnie();
+                GestionDePagnies.viderPagnie();
                 updatePrixTotal();
-                Toast.makeText(CommandeActivity.this, "pagnie est videe", Toast.LENGTH_SHORT).show();
+                Toast.makeText(CommandeActivity.this, "pagnie a été vidée", Toast.LENGTH_SHORT).show();
                 pagnieAdapter.notifyDataSetChanged();
             }
         });
@@ -88,43 +93,40 @@ public class CommandeActivity extends AppCompatActivity {
         });
 
         updatePrixTotal();
-    }
 
+    }
+    private void setUpRecycleView(){
+        pagnieAdapter = new PagnieAdapter(CommandeActivity.this);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setAdapter(pagnieAdapter);
+    }
     private void ajouterCommande() {
-        // TODO : fix it
+        ProgressDialog progressDialog = new ProgressDialog(this);
+        progressDialog.show();
         CollectionReference commandeRef = FirebaseFirestore.getInstance()
-                .document(SavedPagniesDb.getInstance(CommandeActivity.this).getMagazinPath())
+                .document(GestionDeMagazin.getMagazinPath())
                 .collection("Commandes");
         commandeRef
                 .add(new Commande(
                         new Timestamp(new Date()),
-                        FirebaseAuth.getInstance().getCurrentUser().getUid(),
-                        Integer.toString(SavedPagniesDb.getInstance(CommandeActivity.this).calculerSommeCommande())
+                        User.getInstance().getAdresse(),
+                        Integer.toString(GestionDePagnies.calculerSommeCommande())
                         )
                 )
                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                     @Override
                     public void onSuccess(DocumentReference documentReference) {
-                        for (int i=0;i<SavedPagniesDb.pagnies.size();i++){
+                        for (int i = 0; i< GestionDePagnies.pagnies.size(); i++){
                             documentReference.collection("Ligne_commande")
                                     .add(new ItemPagnie(
-                                            SavedPagniesDb.pagnies.get(i).getNom(),
-                                            SavedPagniesDb.pagnies.get(i).getPrix(),
-                                            SavedPagniesDb.pagnies.get(i).getQuentite())
-                                    )
-                                    .addOnFailureListener(new OnFailureListener() {
-                                        @Override
-                                        public void onFailure(@NonNull Exception e) {
-                                            Toast.makeText(CommandeActivity.this,e.toString(), Toast.LENGTH_SHORT).show();
-                                        }
-                                    });
+                                            GestionDePagnies.pagnies.get(i).getNom(),
+                                            GestionDePagnies.pagnies.get(i).getPrix(),
+                                            GestionDePagnies.pagnies.get(i).getQuentite(),
+                                            GestionDePagnies.pagnies.get(i).getImageUrl())
+                                    );
                         }
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(CommandeActivity.this,e.toString(),Toast.LENGTH_SHORT).show();
+                        progressDialog.dismiss();
+                        Toast.makeText(CommandeActivity.this, "Votre commande a ete engistré", Toast.LENGTH_SHORT).show();
                     }
                 });
     }
@@ -132,6 +134,7 @@ public class CommandeActivity extends AppCompatActivity {
     public void updatePrixTotal(){
         prixTotal.setText(
                 "Le prix total : " +
-                String.valueOf(SavedPagniesDb.getInstance(CommandeActivity.this).calculerSommeCommande()));
+                String.valueOf(GestionDePagnies.calculerSommeCommande()) +
+                " DA");
     }
 }

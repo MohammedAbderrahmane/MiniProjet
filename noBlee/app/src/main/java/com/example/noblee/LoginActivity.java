@@ -21,10 +21,11 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class LoginActivity extends AppCompatActivity {
 
-    static final int TO_MAIN = -1;
-    static final int TO_PROFILE = 0;
-    static final int TO_COMMANDE = 1;
-    static final int TO_PUBLICATION = 2;
+    public static final int TO_MAIN = -1;
+    public static final int TO_PROFILE = 0;
+    public static final int TO_COMMANDE = 1;
+    public static final int TO_PUBLICATION = 2;
+    public static final int TO_CONSULTER = 3;
 
     AppCompatButton login;
     EditText email,motpass;
@@ -62,7 +63,7 @@ public class LoginActivity extends AppCompatActivity {
 
     void login (String email,String motpasse){
         int currentPage = getIntent().getIntExtra("currentPage",TO_MAIN);
-        Intent goBack = new Intent(LoginActivity.this,MainActivity.class);;
+        Intent goBack = new Intent(LoginActivity.this,MainActivity.class);
 
         if (currentPage == TO_PROFILE) {
             goBack = new Intent(LoginActivity.this,ProfileActivity.class);
@@ -72,6 +73,9 @@ public class LoginActivity extends AppCompatActivity {
         }
         if (currentPage == TO_PUBLICATION) {
             goBack = new Intent(LoginActivity.this,PublicationActivity.class);
+        }
+        if (currentPage == TO_CONSULTER){
+            goBack = new Intent(LoginActivity.this,ConsulterProduitsActivity.class);
         }
 
         Intent finalGoBack = goBack;
