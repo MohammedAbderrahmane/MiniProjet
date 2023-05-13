@@ -3,22 +3,40 @@ package com.example.noblee.NonActivityClasses.RecycleViewMagazins;
 import com.google.firebase.firestore.DocumentReference;
 
 public class ItemMagazin {
-    String nom, nomVondeur,telephone;
-    DocumentReference magazinReference;
+    String nom,location,nomVondeur,telephone,imageUrl;
 
-    public ItemMagazin(String nom, String nom_vondeur, String telephone,DocumentReference documentReference) {
+    DocumentReference reference;
+    public ItemMagazin(String nom, String location, String nom_vondeur, String telephone, String imageUrl, DocumentReference reference) {
         this.nom = nom;
+        this.location = location;;
         this.nomVondeur = nom_vondeur;
         this.telephone = telephone;
-        this.magazinReference = documentReference;
+        this.imageUrl = imageUrl;
+        this.reference = reference;
     }
 
-    public DocumentReference getMagazinReference() {
-        return magazinReference;
+    public String getLocation() {
+        return location;
     }
 
-    public void setMagazinReference(DocumentReference magazinReference) {
-        this.magazinReference = magazinReference;
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
+    public DocumentReference getReference() {
+        return reference;
+    }
+
+    public void setReference(DocumentReference reference) {
+        this.reference = reference;
     }
 
     public String getNom() {

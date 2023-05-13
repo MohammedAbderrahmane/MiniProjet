@@ -8,7 +8,7 @@
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appBarLayout"
-        android:background="#00000000"
+        android:background="@color/white"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
@@ -44,7 +44,8 @@
                 android:id="@+id/main_to_profile"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="10dp"
+                android:layout_marginRight="15dp"
+                android:padding="10dp"
                 android:src="@drawable/profile"
                 android:background="@drawable/image_button_bg"
                 app:layout_constraintBottom_toBottomOf="parent"

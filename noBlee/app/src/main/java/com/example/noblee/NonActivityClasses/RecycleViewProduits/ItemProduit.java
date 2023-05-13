@@ -1,12 +1,13 @@
 package com.example.noblee.NonActivityClasses.RecycleViewProduits;
 
 public class ItemProduit {
-    String nom, imageUrl, prix;
+    String nom, imageUrl, prix,categorie;
 
-     public ItemProduit(String nom, String prix, String image) {
+     public ItemProduit(String nom, String prix, String image,String categorie) {
         this.nom = nom;
         this.prix = prix;
         this.imageUrl = image;
+        this.categorie = categorie;
     }
 
     public String getNom() {
@@ -31,5 +32,13 @@ public class ItemProduit {
 
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
+    }
+
+    public String getCategorie() {
+        return categorie;
+    }
+
+    public void setCategorie(String categorie) {
+        this.categorie = categorie;
     }
 }

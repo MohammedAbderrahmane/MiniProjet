@@ -3,40 +3,89 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:paddingBottom="15dp">
+
+    <ImageView
+        android:id="@+id/magazin_image"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/exemple_image_produit" />
 
     <TextView
         android:id="@+id/magazin_nom"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="nom Magazin"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:text="Magazin : "
+        android:textColor="@color/black"
+        android:textSize="20dp"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/magazin_image" />
 
     <TextView
-        android:id="@+id/magazin_nom_vondeur"
+        android:id="@+id/magazin_location"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="nom Vondeur"
-        app:layout_constraintEnd_toEndOf="@+id/magazin_nom"
+        android:layout_marginTop="8dp"
+        android:text="Location :"
+        android:textColor="@color/black"
+        android:textSize="18dp"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="@+id/magazin_nom"
         app:layout_constraintTop_toBottomOf="@+id/magazin_nom" />
+
+    <TextView
+        android:id="@+id/magazin_vendeur"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:text="nom de vendeur :"
+        android:textColor="@color/black"
+        android:textSize="15dp"
+        app:layout_constraintStart_toStartOf="@+id/magazin_location"
+        app:layout_constraintTop_toBottomOf="@+id/magazin_location" />
 
     <TextView
         android:id="@+id/magazin_telephone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="numero telehone"
-        app:layout_constraintEnd_toEndOf="@+id/magazin_nom_vondeur"
-        app:layout_constraintStart_toStartOf="@+id/magazin_nom_vondeur"
-        app:layout_constraintTop_toBottomOf="@+id/magazin_nom_vondeur" />
+        android:layout_marginTop="8dp"
+        android:text="Numero telephone :"
+        android:textColor="@color/black"
+        android:textSize="15dp"
+        app:layout_constraintStart_toStartOf="@+id/magazin_vendeur"
+        app:layout_constraintTop_toBottomOf="@+id/magazin_vendeur" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/magazin_produits_recycleview"
-        android:layout_width="0dp"
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/magazin_consulter"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
+        android:background="@drawable/button_bg"
+        android:paddingHorizontal="20dp"
+        android:paddingVertical="15dp"
+        android:text="Consulter les produits"
+        android:textAllCaps="false"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/magazin_telephone" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/magazin_recycle_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="15dp"
+        android:layout_marginTop="10dp"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.551"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/magazin_consulter"
+        tools:visibility="visible" />
 </androidx.constraintlayout.widget.ConstraintLayout>

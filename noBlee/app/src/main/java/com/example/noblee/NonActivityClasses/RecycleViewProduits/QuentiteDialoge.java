@@ -17,7 +17,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatDialogFragment;
 
-import com.example.noblee.NonActivityClasses.SavedPagniesDb;
+import com.example.noblee.NonActivityClasses.GestionDeMagazin;
+import com.example.noblee.NonActivityClasses.GestionDePagnies;
 import com.example.noblee.R;
 
 public class QuentiteDialoge extends AppCompatDialogFragment {
@@ -34,21 +35,30 @@ public class QuentiteDialoge extends AppCompatDialogFragment {
         View view = getActivity().getLayoutInflater().inflate(R.layout.dialog_modifier_quentite,null);
 
         builder.setView(view)
-                .setTitle("Selectioner la quentite :")
-                .setPositiveButton("ajouter au pagnie", new DialogInterface.OnClickListener() {
+                .setTitle("Selectioner la quentité :")
+                .setPositiveButton("ajouter le pagnie", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        SavedPagniesDb.getInstance(getContext()).ajouterUnPagnie(
+                        try{
+                        GestionDePagnies.ajouterPagnie(
                                 getArguments().getString("nom"),
                                 getArguments().getString("prix"),
-                                quentite.getText().toString().trim()
+                                quentite.getText().toString().trim(),
+                                getArguments().getString("image")
                         );
-                        Toast.makeText(getContext(), "saved pagnie", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), "Votre pagnie a été engistré", Toast.LENGTH_SHORT).show();
+                    }catch (Exception e){
+                        Toast.makeText(getContext(), e.toString(), Toast.LENGTH_SHORT).show();
+                    }
                     }
                 })
                 .setNegativeButton("annuler", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
+                        // in start of dialog -> new magazin : si annuler alors suprimer new magazin
+                        if (GestionDePagnies.checkEmptyPagnies()){
+                            GestionDeMagazin.clearMagazin();
+                        }
                         dialogInterface.dismiss();
                     }
                 });
@@ -96,8 +106,9 @@ public class QuentiteDialoge extends AppCompatDialogFragment {
             }else if (Integer.parseInt(quentite.getText().toString())<1 || Integer.parseInt(quentite.getText().toString())>10){
                 statue.setText("Invalide quentite");
                 statue.setVisibility(View.VISIBLE);
-            }else
+            }else{
                 statue.setVisibility(View.GONE);
+            }
         }
         @Override
         public void afterTextChanged(Editable editable) {}

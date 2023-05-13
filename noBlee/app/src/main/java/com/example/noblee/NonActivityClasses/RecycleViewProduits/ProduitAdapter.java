@@ -1,6 +1,8 @@
 package com.example.noblee.NonActivityClasses.RecycleViewProduits;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,13 +14,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.example.noblee.NonActivityClasses.SavedPagniesDb;
+import com.example.noblee.LoginActivity;
+import com.example.noblee.NonActivityClasses.GestionDeMagazin;
+import com.example.noblee.NonActivityClasses.GestionDePagnies;
 import com.example.noblee.R;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.List;
 
@@ -42,67 +43,52 @@ public class ProduitAdapter extends RecyclerView.Adapter<ProduitHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull ProduitHolder holder, int position) {
+
         ItemProduit produit = produits.get(position);
-        // nom de produit et prix
-        holder.nomProduit.setText(produit.getNom());
-        holder.prixProduit.setText(produit.getPrix());
-        // image
+
+        holder.nom.setText(         "Produit : " + produit.getNom());
+        holder.categorie.setText(   "Categorie : " + produit.getCategorie());
+        holder.prix.setText(        "Prix : " + produit.getPrix());
+
         setUpImage(produit.getImageUrl(),holder);
         // dialog
-        setUpAjouterAuPagnie(holder,position);
+        setUpAjouterAuPagnie(holder,produit);
     }
 
     private void setUpImage(String imageUrl, ProduitHolder holder) {
         Glide.with(context)
                 .load(imageUrl)
-                .into(holder.imageProduit);
+                .into(holder.image);
     }
 
-    private void setUpAjouterAuPagnie(ProduitHolder holder, int position){
+    private void setUpAjouterAuPagnie(ProduitHolder holder, ItemProduit produit){
         Bundle argsOfDialog = new Bundle();
         QuentiteDialoge quentiteDialoge = new QuentiteDialoge();
 
         holder.ajouterAuPagnie.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (SavedPagniesDb.getInstance(context).checkMemeMagazin(magazinRef)) {
-                    argsOfDialog.putString("nom", produits.get(position).getNom());
-                    argsOfDialog.putString("prix", produits.get(position).getPrix());
+                if (FirebaseAuth.getInstance().getCurrentUser() == null) {
+                    Intent goLogin = new Intent(( (Activity)context), LoginActivity.class);
+                    goLogin.putExtra("currentPage",LoginActivity.TO_CONSULTER);
+                    ( (Activity)context).finish();
+                    ( (Activity)context).startActivity(goLogin);
+                    return;
+                }
+                if (GestionDePagnies.poduitDejaDemmande(produit.getNom())){
+                    Toast.makeText(context, "Produit existe déja dans pagnie", Toast.LENGTH_SHORT).show();
+                }
+                if (GestionDeMagazin.checkMemeMagazin(magazinRef)) {
+                    argsOfDialog.putString("nom", produit.getNom());
+                    argsOfDialog.putString("prix", produit.getPrix());
+                    argsOfDialog.putString("image", produit.getImageUrl());
                     quentiteDialoge.setArguments(argsOfDialog);
                     quentiteDialoge.show(((AppCompatActivity) context).getSupportFragmentManager(), "quentite");
                 }else{
-                    Toast.makeText(context, "You must select products from one Shop", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "Order Annulée : You must select products from one Shop", Toast.LENGTH_SHORT).show();
                 }
             }
         });
-    }
-
-    public void getProduitsOfFirestore(DocumentReference magazinReference){
-        magazinRef = magazinReference;
-        magazinReference.collection("Produits")
-                .get()
-                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-                    @Override
-                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                        for (QueryDocumentSnapshot documentSnapshot : queryDocumentSnapshots){
-                            produits.add(
-                                    new ItemProduit(
-                                            documentSnapshot.getString("nom"),
-                                            documentSnapshot.getString("prix"),
-                                            documentSnapshot.getString("imageUrl")
-                                    )
-                            );
-                        }
-                        notifyDataSetChanged();
-                        Toast.makeText(context,"azaza", Toast.LENGTH_SHORT).show();
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(context,e.toString(), Toast.LENGTH_SHORT).show();
-                    }
-                });
     }
 
     @Override
@@ -110,4 +96,7 @@ public class ProduitAdapter extends RecyclerView.Adapter<ProduitHolder> {
         return produits.size();
     }
 
+    public void setMagazinRef(DocumentReference magazinRef) {
+        this.magazinRef = magazinRef;
+    }
 }

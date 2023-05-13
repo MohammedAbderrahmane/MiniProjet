@@ -1,14 +1,23 @@
 package com.example.noblee.NonActivityClasses.RecycleViewPagnie;
 
 public class ItemPagnie {
-    String nom,prix,quentite;
+    String nom,prix,quentite,imageUrl;
 
     public ItemPagnie(){}
 
-    public ItemPagnie(String nom, String prix, String quentite) {
+    public ItemPagnie(String nom, String prix, String quentite,String imageUrl) {
         this.nom = nom;
         this.prix = prix;
         this.quentite = quentite;
+        this.imageUrl = imageUrl;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 
     public String getNom() {

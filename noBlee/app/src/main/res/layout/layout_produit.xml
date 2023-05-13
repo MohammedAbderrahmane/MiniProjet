@@ -1,45 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="300dp"
-    android:layout_height="wrap_content"
-    android:padding="10dp">
-
-    <ImageView
-        android:id="@+id/produit_image"
-        android:layout_width="180dp"
-        android:layout_height="180dp"
-        android:background="#B80707"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/produit_nom_text"
-        android:layout_width="wrap_content"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="0000 da"
-        app:layout_constraintBottom_toBottomOf="@+id/produit_image"
-        app:layout_constraintStart_toEndOf="@+id/produit_image" />
+        android:background="@drawable/button_bg"
+        android:elevation="@dimen/activity_horizontal_margin"
+        android:layout_marginBottom="6dp">
 
-    <ImageButton
-        android:id="@+id/produit_buy_btn"
-        android:layout_width="75dp"
-        android:layout_height="75dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/produit_image"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@android:drawable/ic_input_add" />
+        <ImageView
+            android:id="@+id/produit_image"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/exemple_image_produit" />
 
-    <TextView
-        android:id="@+id/produit_prix_text"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:autoText="false"
-        android:text="nom_Produit"
-        app:layout_constraintBottom_toTopOf="@+id/produit_nom_text"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/produit_image" />
+        <TextView
+            android:id="@+id/produit_nom"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="5dp"
+            android:text="Produit : "
+            android:textColor="@color/black"
+            android:textSize="17dp"
+            app:layout_constraintStart_toEndOf="@+id/produit_image"
+            app:layout_constraintTop_toTopOf="@+id/produit_image" />
 
+        <TextView
+            android:id="@+id/produit_categorie"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="8dp"
+            android:text="Categorie : "
+            android:textColor="@color/black"
+            android:textSize="17dp"
+            app:layout_constraintStart_toEndOf="@+id/produit_image"
+            app:layout_constraintTop_toBottomOf="@+id/produit_nom" />
+
+        <TextView
+            android:id="@+id/produit_prix"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginLeft="20dp"
+            android:text="Prix : "
+            android:textColor="@color/black"
+            android:textSize="17dp"
+            app:layout_constraintStart_toEndOf="@+id/produit_image"
+            app:layout_constraintTop_toBottomOf="@+id/produit_categorie" />
+
+        <ImageButton
+            android:id="@+id/produit_buy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/image_button_bg"
+            android:padding="10dp"
+            android:src="@drawable/user_1"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -8,6 +8,8 @@ import android.widget.ImageButton;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 
+import com.example.noblee.NonActivityClasses.LocalDataBase;
+import com.example.noblee.NonActivityClasses.GestionDePagnies;
 import com.example.noblee.NonActivityClasses.User;
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -21,9 +23,15 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // things to do for functioning activities
+
+        LocalDataBase.createInstance(getApplicationContext());
+        GestionDePagnies.setUpListPagnie();
         if (FirebaseAuth.getInstance().getCurrentUser() != null){
             User.createInstance();
         }
+        // end
+
 
         consulterProduits = findViewById(R.id.main_consulter_produits);
         pageCommande = findViewById(R.id.main_page_commande);

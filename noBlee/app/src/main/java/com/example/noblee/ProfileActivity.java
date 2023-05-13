@@ -22,7 +22,7 @@ import java.util.Map;
 public class ProfileActivity extends AppCompatActivity {
     EditText nom,prenom,address;
     AppCompatButton modifier;
-    ImageButton deconnecter;
+    ImageButton deconnecter,goBack;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +42,7 @@ public class ProfileActivity extends AppCompatActivity {
         address = findViewById(R.id.profile_adresse);
         modifier = findViewById(R.id.profile_modifier);
         deconnecter = findViewById(R.id.profile_deconnecter);
+        goBack = findViewById(R.id.profile_return);
 
 
 
@@ -62,6 +63,13 @@ public class ProfileActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 deconnecter();
+            }
+        });
+
+        goBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
             }
         });
 
