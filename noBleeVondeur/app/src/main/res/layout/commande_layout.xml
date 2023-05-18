@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/edit_text_background"
+    android:background="@drawable/commande_background"
     android:layout_margin="2dp">
 
     <androidx.recyclerview.widget.RecyclerView
@@ -19,7 +19,7 @@
         android:id="@+id/commande_number"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Commande : N#0"
+        android:text="Commande : N#"
         android:textSize="18dp"
         android:textColor="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
@@ -37,25 +37,32 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/commande_ligne_commande" />
 
-    <ImageButton
-        android:id="@+id/commande_accept"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="130dp"
-        android:background="@drawable/image_button_background"
-        android:padding="15dp"
-        android:src="@drawable/check"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/commande_prix_total" />
+        app:layout_constraintTop_toBottomOf="@+id/commande_prix_total"
+        android:gravity="center"
+        >
 
-    <ImageButton
-        android:id="@+id/commande_refuser"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginRight="130dp"
-        android:background="@drawable/image_button_background"
-        android:padding="16dp"
-        android:src="@drawable/cross"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/commande_prix_total" />
+        <ImageButton
+            android:id="@+id/commande_accept"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/image_button_background"
+            android:padding="15dp"
+            android:layout_marginVertical="15dp"
+            android:layout_marginRight="25dp"
+            android:src="@drawable/check"/>
+
+        <ImageButton
+            android:id="@+id/commande_refuser"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/image_button_background"
+            android:padding="16dp"
+            android:src="@drawable/cross"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/commande_prix_total" />
+    </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

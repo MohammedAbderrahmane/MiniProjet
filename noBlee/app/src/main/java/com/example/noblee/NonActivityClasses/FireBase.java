@@ -16,4 +16,5 @@ public class FireBase {
     public static final String PUB_DISLIKE = "Dislikes";
     public static final String PUB_LIKE = "Likes";
     public static final String REACTOR = "user";
+    public static final String PUB_CREE_PAR_MEDECIN = "creeParMedecin";
 }

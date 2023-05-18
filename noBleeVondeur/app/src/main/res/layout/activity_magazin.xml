@@ -84,13 +84,15 @@
         app:layout_constraintTop_toBottomOf="@+id/magazin_nom_vondeur" />
 
     <TextView
-        android:id="@+id/textView4"
+        android:id="@+id/z"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
-        android:text="Location : a faire"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        android:text="Adresse du magazin"
+        android:textColor="@color/black"
+        android:textSize="19dp"
+        app:layout_constraintEnd_toEndOf="@+id/magazin_num_telephone"
+        app:layout_constraintStart_toStartOf="@+id/magazin_num_telephone"
         app:layout_constraintTop_toBottomOf="@+id/magazin_num_telephone" />
 
     <EditText
@@ -129,9 +131,20 @@
         android:paddingVertical="14dp"
         android:textColorHint="@color/cardview_dark_background"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView3" />
+
+    <EditText
+        android:id="@+id/magazin_adress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/edit_text_background"
+        android:hint="Entrer l'adresse de magazin"
+        android:paddingHorizontal="25dp"
+        android:paddingVertical="14dp"
+        app:layout_constraintEnd_toEndOf="@+id/z"
+        app:layout_constraintStart_toStartOf="@+id/z"
+        app:layout_constraintTop_toBottomOf="@+id/z" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/magazin_modifier_information"

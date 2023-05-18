@@ -11,14 +11,16 @@ public class ItemPublication {
     String auteur,contenu, numLike, numDislike;
     Date date;
     DocumentReference reference;
+    boolean creeParMedecin;
 
 
-    public ItemPublication(String auteur, String contenu, Date date, String likes, String dislikes) {
+    public ItemPublication(String auteur, String contenu, Date date, String likes, String dislikes, Boolean creeParMedecin) {
         this.auteur = auteur;
         this.date = date;
         this.contenu = contenu;
         this.numLike = likes;
         this.numDislike = dislikes;
+        this.creeParMedecin = creeParMedecin;
     }
     public String calculerDate() {
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
@@ -82,5 +84,11 @@ public class ItemPublication {
         this.reference = reference;
     }
 
+    public boolean isCreeParMedecin() {
+        return creeParMedecin;
+    }
 
+    public void setCreeParMedecin(boolean creeParMedecin) {
+        this.creeParMedecin = creeParMedecin;
+    }
 }

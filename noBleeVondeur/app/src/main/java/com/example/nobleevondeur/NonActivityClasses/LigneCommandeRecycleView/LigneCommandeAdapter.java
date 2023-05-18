@@ -14,7 +14,7 @@ import java.util.List;
 public class LigneCommandeAdapter extends RecyclerView.Adapter<LigneCommandeHolder> {
 
     Context context;
-    List<ItemLigneCommmande> ligneCommmandeList;
+    public List<ItemLigneCommmande> ligneCommmandeList;
 
     public LigneCommandeAdapter(Context context, List<ItemLigneCommmande> itemLigneCommmandes) {
         this.context = context;

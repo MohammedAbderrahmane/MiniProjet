@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <Button
+        android:id="@+id/main_profile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="80dp"
+        android:layout_marginBottom="25dp"
+                android:ems="10"
+        android:paddingRight="14dp"
+        android:text="Profile"
+        android:textAllCaps="false"
+
+
+        app:layout_constraintBottom_toTopOf="@+id/main_Publication"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/main_bonjour" />
+
+    <Button
+        android:id="@+id/main_Publication"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="80dp"
+        android:layout_marginBottom="25dp"
+
+        android:ems="15"
+        android:paddingRight="14dp"
+        android:text="Publication"
+        android:textAllCaps="false"
+
+        app:layout_constraintBottom_toTopOf="@+id/main_Messagrie"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/main_profile" />
+
+    <Button
+        android:id="@+id/main_Messagrie"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="80dp"
+        android:layout_marginBottom="299dp"
+        android:ems="15"
+        android:paddingRight="14dp"
+        android:text="Messagrie"
+        android:textAllCaps="false"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/main_profile"
+        app:layout_constraintStart_toStartOf="@+id/main_profile"
+        app:layout_constraintTop_toBottomOf="@+id/main_Publication" />
+
+    <TextView
+        android:id="@+id/main_bonjour"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="100dp"
+        android:text="Bonjour ..."
+        android:textColor="@color/black"
+        android:textSize="24dp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>
