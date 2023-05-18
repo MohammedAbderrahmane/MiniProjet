@@ -94,8 +94,8 @@ public class PublicationActivity extends AppCompatActivity {
                                 contenu,
                                 new Date(),
                                 String.valueOf(0),
-                                String.valueOf(0)
-                        )
+                                String.valueOf(0),
+                                false)
                 )
                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                     @Override
@@ -129,7 +129,8 @@ public class PublicationActivity extends AppCompatActivity {
                                     document.getString(FireBase.PUB_CONTENU),
                                     document.getDate(FireBase.PUB_DATE),
                                     document.getString(FireBase.PUB_NUM_LIKE),
-                                    document.getString(FireBase.PUB_NUM_DISLIKE)
+                                    document.getString(FireBase.PUB_NUM_DISLIKE),
+                                    document.getBoolean(FireBase.PUB_CREE_PAR_MEDECIN)
                             );
                             publication.setReference(document.getReference());
                             publications.add(publication);

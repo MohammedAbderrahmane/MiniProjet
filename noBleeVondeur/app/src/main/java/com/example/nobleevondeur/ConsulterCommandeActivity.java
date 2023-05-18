@@ -46,6 +46,7 @@ public class ConsulterCommandeActivity extends AppCompatActivity {
         commandeRecycleView.setAdapter(commandeAdapter);
         DataBase.getInstance(getApplicationContext()).getMagazinRef()
                 .collection("Commandes")
+                //.whereNotEqualTo("deleted",false)
                 .get()
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                     @Override

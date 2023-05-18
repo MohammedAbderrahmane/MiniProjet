@@ -45,12 +45,12 @@ public class CommandeAdapter extends RecyclerView.Adapter<CommandeHolder>{
     public void onBindViewHolder(@NonNull CommandeHolder holder, int position) {
         ItemCommande commande = commandes.get(position);
 
-        holder.nubmber.setText("N#" + (position+1));
-        holder.prixTotal.setText("Le prix total :" + commande.getPrixTotal());
+        holder.nubmber.setText(holder.nubmber.getText().toString().trim() + (position+1));
+        holder.prixTotal.setText("Le prix total : " + commande.getPrixTotal() + " DA");
         holder.accepter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                accepterCommande(commande);
             }
         });
 
@@ -63,6 +63,9 @@ public class CommandeAdapter extends RecyclerView.Adapter<CommandeHolder>{
 
         setUpLigneCommandesRecucleView(holder,position);
 
+    }
+
+    private void accepterCommande(ItemCommande commande) {
     }
 
     private void supprimeCommande(ItemCommande commande) {
@@ -80,26 +83,8 @@ public class CommandeAdapter extends RecyclerView.Adapter<CommandeHolder>{
                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                     @Override
                     public void onSuccess(DocumentReference reference) {
-                        commande.getCommandeRef()
-                                .delete()
-                                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                    @Override
-                                    public void onSuccess(Void unused) {
-                                        List<DocumentSnapshot> documents = commande.getCommandeRef()
-                                                .collection("Ligne_commande")
-                                                .get().getResult().getDocuments();
-                                        for (DocumentSnapshot document : documents) {
-                                            document.getReference().delete();
-                                        }
-                                        Toast.makeText(context, "Commande a ete refusee", Toast.LENGTH_SHORT).show();
-                                    }
-                                })
-                                .addOnFailureListener(new OnFailureListener() {
-                                    @Override
-                                    public void onFailure(@NonNull Exception e) {
-                                        Toast.makeText(context, e.toString(), Toast.LENGTH_SHORT).show();
-                                    }
-                                });
+                        commande.getCommandeRef().update("deleted", false);
+                                
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
@@ -114,9 +99,8 @@ public class CommandeAdapter extends RecyclerView.Adapter<CommandeHolder>{
     public int getItemCount() {
         return commandes.size();
     }
-
     void setUpLigneCommandesRecucleView(CommandeHolder holder, int position){
-        LigneCommandeAdapter ligneCommandeAdapter = new LigneCommandeAdapter(context,ligneCommmandes);
+        LigneCommandeAdapter ligneCommandeAdapter = new LigneCommandeAdapter(context,ligneCommmandes = new ArrayList<>());
         holder.lignies_commandes.setLayoutManager(new LinearLayoutManager(context));
         holder.lignies_commandes.setAdapter(ligneCommandeAdapter);
         commandes.get(position).commandeRef
@@ -126,7 +110,7 @@ public class CommandeAdapter extends RecyclerView.Adapter<CommandeHolder>{
                     @Override
                     public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
                         for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
-                            ligneCommmandes.add(
+                            ligneCommandeAdapter.ligneCommmandeList.add(
                                     new ItemLigneCommmande(
                                             document.getString("nom"),
                                             document.getString("prix"),

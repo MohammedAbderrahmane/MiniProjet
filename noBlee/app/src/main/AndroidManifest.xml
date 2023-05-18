@@ -13,6 +13,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.NoBlee"
         tools:targetApi="31">
+        <activity
+            android:name=".MessageActivity"
+            android:exported="false" />
 
         <meta-data
             android:name="com.braintreepayments.api.tnvvzj5v3kzp5vvd"
@@ -50,6 +53,7 @@
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
