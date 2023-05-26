@@ -9,16 +9,14 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.noblee.NonActivityClasses.FireBase;
+import com.example.noblee.NonActivityClasses.KeyWord;
 import com.example.noblee.NonActivityClasses.RecycleViewPublication.ItemPublication;
 import com.example.noblee.NonActivityClasses.RecycleViewPublication.PublicationAdapter;
 import com.example.noblee.NonActivityClasses.User;
-import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
@@ -50,7 +48,7 @@ public class PublicationActivity extends AppCompatActivity {
             startActivity(goLogin);
             return;
         }
-
+try {
         newPublication = findViewById(R.id.publication_new_publication_edit_text);
         ajouterNewPublication = findViewById(R.id.publication_new_publication_ajouter);
         recyclerView = findViewById(R.id.publication_recycle_view);
@@ -82,12 +80,12 @@ public class PublicationActivity extends AppCompatActivity {
         });
 
         setUpRecycleView();
-
+    }catch (Exception e){Toast.makeText(this, e.toString(), Toast.LENGTH_SHORT).show();}
     }
 
     private void ajouterPublication(String contenu) {
         FirebaseFirestore.getInstance()
-                .collection(FireBase.PUBLICATION)
+                .collection(KeyWord.PUBLICATION)
                 .add(
                         new ItemPublication(
                                 User.getInstance().getNom() + " " + User.getInstance().getPrenom(),
@@ -102,13 +100,16 @@ public class PublicationActivity extends AppCompatActivity {
                     public void onSuccess(DocumentReference reference) {
                         Toast.makeText(PublicationActivity.this, "Succe", Toast.LENGTH_SHORT).show();
                         newPublication.setText("");
+                        publications.add(new ItemPublication(
+                                User.getInstance().getNom() + " " + User.getInstance().getPrenom(),
+                                contenu,
+                                new Date(),
+                                String.valueOf(0),
+                                String.valueOf(0),
+                                reference,
+                                false));
                         ajouterNewPublication.setEnabled(false);
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(PublicationActivity.this, "failed", Toast.LENGTH_SHORT).show();
+                        recyclerView.getAdapter().notifyDataSetChanged();
                     }
                 });
     }
@@ -117,35 +118,29 @@ public class PublicationActivity extends AppCompatActivity {
         PublicationAdapter publicationAdapter = new PublicationAdapter(this,publications = new ArrayList<>());
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(publicationAdapter);
+
         FirebaseFirestore.getInstance()
-                .collection(FireBase.PUBLICATION)
+                .collection(KeyWord.PUBLICATION)
                 .get()
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                     @Override
                     public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
                         for (DocumentSnapshot document : queryDocumentSnapshots){
                             ItemPublication publication = new ItemPublication(
-                                    document.getString(FireBase.PUB_AUTEUR),
-                                    document.getString(FireBase.PUB_CONTENU),
-                                    document.getDate(FireBase.PUB_DATE),
-                                    document.getString(FireBase.PUB_NUM_LIKE),
-                                    document.getString(FireBase.PUB_NUM_DISLIKE),
-                                    document.getBoolean(FireBase.PUB_CREE_PAR_MEDECIN)
+                                    document.getString(KeyWord.PUB_AUTEUR),
+                                    document.getString(KeyWord.PUB_CONTENU),
+                                    document.getDate(KeyWord.PUB_DATE),
+                                    document.getString(KeyWord.PUB_NUM_LIKE),
+                                    document.getString(KeyWord.PUB_NUM_DISLIKE),
+                                    document.getReference(),
+                                    document.getBoolean(KeyWord.PUB_CREE_PAR_MEDECIN)
                             );
                             publication.setReference(document.getReference());
                             publications.add(publication);
                         }
                         publicationAdapter.notifyDataSetChanged();
                     }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                    }
                 });
-
-
-
     }
 
 }

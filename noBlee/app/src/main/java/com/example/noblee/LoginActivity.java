@@ -26,10 +26,12 @@ public class LoginActivity extends AppCompatActivity {
     public static final int TO_COMMANDE = 1;
     public static final int TO_PUBLICATION = 2;
     public static final int TO_CONSULTER = 3;
+    public static final int TO_MESSAGE = 4;
 
     AppCompatButton login;
     EditText email,motpass;
     TextView toRegisterPage,statue;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,19 +65,26 @@ public class LoginActivity extends AppCompatActivity {
 
     void login (String email,String motpasse){
         int currentPage = getIntent().getIntExtra("currentPage",TO_MAIN);
-        Intent goBack = new Intent(LoginActivity.this,MainActivity.class);
+        Intent goBack;
 
-        if (currentPage == TO_PROFILE) {
-            goBack = new Intent(LoginActivity.this,ProfileActivity.class);
-        }
-        if (currentPage == TO_COMMANDE) {
-            goBack = new Intent(LoginActivity.this,CommandeActivity.class);
-        }
-        if (currentPage == TO_PUBLICATION) {
-            goBack = new Intent(LoginActivity.this,PublicationActivity.class);
-        }
-        if (currentPage == TO_CONSULTER){
-            goBack = new Intent(LoginActivity.this,ConsulterProduitsActivity.class);
+        switch (currentPage){
+            case TO_PROFILE:
+                goBack = new Intent(LoginActivity.this,ProfileActivity.class);
+                break;
+            case TO_COMMANDE:
+                goBack = new Intent(LoginActivity.this,CommandeActivity.class);
+                break;
+            case TO_PUBLICATION:
+                goBack = new Intent(LoginActivity.this,PublicationActivity.class);
+                break;
+            case TO_CONSULTER:
+                goBack = new Intent(LoginActivity.this, ConsulterActivity.class);
+                break;
+            case TO_MESSAGE:
+                goBack = new Intent(LoginActivity.this, MessageActivity.class);
+                break;
+            default:
+                goBack = new Intent(LoginActivity.this, MainActivity.class);
         }
 
         Intent finalGoBack = goBack;

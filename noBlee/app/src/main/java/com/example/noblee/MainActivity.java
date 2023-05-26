@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
         consulterProduits.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getApplicationContext(),ConsulterProduitsActivity.class));
+                startActivity(new Intent(getApplicationContext(), ConsulterActivity.class));
             }
         });
 

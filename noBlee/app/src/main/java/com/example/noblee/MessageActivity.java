@@ -1,10 +1,13 @@
 package com.example.noblee;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -15,9 +18,13 @@ import com.example.noblee.NonActivityClasses.RecycleViewMessage.MessageAdapter;
 import com.example.noblee.NonActivityClasses.User;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.Timestamp;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.Date;
@@ -36,7 +43,15 @@ public class MessageActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_message);
-        
+
+        if (FirebaseAuth.getInstance().getCurrentUser() == null) {
+            Intent goLogin = new Intent(this, LoginActivity.class);
+            goLogin.putExtra("currentPage",LoginActivity.TO_MESSAGE);
+            finish();
+            startActivity(goLogin);
+            return;
+        }
+
         lancerLayout = findViewById(R.id.message_lancer_layout);
         messagesLayout = findViewById(R.id.message_messages_layout);
         lancer = findViewById(R.id.message_lancer);
@@ -97,6 +112,29 @@ public class MessageActivity extends AppCompatActivity {
         messagesRecycleView.setAdapter(messageAdapter);
         messageAdapter.notifyDataSetChanged();
 
+        messagrie.getReference()
+                .collection("Messages")
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                        if (error != null){
+                            Toast.makeText(MessageActivity.this, error.toString(), Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+                        for (DocumentChange documentChange : value.getDocumentChanges()){
+                            if (documentChange.getType() == DocumentChange.Type.ADDED){
+                                DocumentSnapshot document = documentChange.getDocument();
+                                messagrie.getMessages().add(
+                                        new ItemMessage(
+                                                document.getString("contenu"),
+                                                document.getBoolean("sentByMalade"),
+                                                document.getTimestamp("date")
+                                        )
+                                );
+                            }
+                        }
+                    }
+                });
     }
 
     private void sendMessage(String contenu){
@@ -121,6 +159,8 @@ public class MessageActivity extends AppCompatActivity {
     private void lancerCommunication(){
         final String[] medecinPathChoisi = new String[1];
         final String[] medecinNomEtPrenom = new String[1];
+        final DocumentReference[] medecinRef = new DocumentReference[1];
+        final int[] count = {0};
 
         lancer.setEnabled(false);
         FirebaseFirestore.getInstance().collection("Medecin")
@@ -128,21 +168,22 @@ public class MessageActivity extends AppCompatActivity {
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                     @Override
                     public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                        int count = 0;
-                        for (DocumentSnapshot document : queryDocumentSnapshots){
+
+                        for (DocumentSnapshot document : queryDocumentSnapshots) {
                             int currentCount;
-                            if (document.contains("messagrieCount")){
-                                currentCount = Integer.parseInt(document.getString("messagrieCount"));
-                            }else {
+                            if (document.contains("numMessagrie")) {
+                                currentCount = Integer.parseInt(document.getString("numMessagrie"));
+                            } else {
                                 currentCount = 0;
                             }
 
-                            if (currentCount >= count){
-                                count = currentCount;
+                            if (currentCount >= count[0]) {
+                                medecinRef[0] = document.getReference();
+                                count[0] = currentCount;
                                 medecinNomEtPrenom[0] = document.getString("nom") + " " + document.getString("prenom");
                                 medecinPathChoisi[0] = document.getReference().getPath();
                             }
-
+                        }
                             FirebaseFirestore.getInstance().collection("Messagrie")
                                     .add(
                                             new Messagrie(
@@ -155,6 +196,9 @@ public class MessageActivity extends AppCompatActivity {
                                     .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                                         @Override
                                         public void onSuccess(DocumentReference reference) {
+                                            medecinRef[0].update("numMessagrie",String.valueOf(count[0]+1));
+
+
                                             messagrie = new Messagrie(
                                                     User.getInstance().getReference().getPath(),
                                                     medecinPathChoisi[0],
@@ -166,7 +210,6 @@ public class MessageActivity extends AppCompatActivity {
                                         }
                                     });
 
-                        }
                     }
                 });
 

@@ -77,7 +77,7 @@
         app:layout_constraintTop_toBottomOf="@+id/commande_pagnies" />
 
     <TextView
-        android:id="@+id/commande_prix_total"
+        android:id="@+id/item_commande_prix_total"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
@@ -87,4 +87,16 @@
         app:layout_constraintBottom_toTopOf="@+id/commande_confirme"
         app:layout_constraintStart_toStartOf="@+id/commande_confirme" />
 
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/commande_consulter_etat"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/button_bg"
+        android:elevation="42dp"
+        android:paddingHorizontal="20dp"
+        android:paddingVertical="15dp"
+        android:text="Consulter etats \ndes commandes\ndaja dmander"
+        android:translationZ="50dp"
+        app:layout_constraintBottom_toTopOf="@+id/commande_annuler"
+        app:layout_constraintStart_toStartOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

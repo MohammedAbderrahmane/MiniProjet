@@ -37,7 +37,7 @@
             android:name=".CharityActivity"
             android:exported="false" />
         <activity
-            android:name=".ConsulterProduitsActivity"
+            android:name=".ConsulterActivity"
             android:exported="false" />
         <activity
             android:name=".ProfileActivity"

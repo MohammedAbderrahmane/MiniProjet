@@ -6,8 +6,7 @@
     android:layout_height="wrap_content"
     android:background="@drawable/button_bg"
     android:elevation="@dimen/activity_horizontal_margin"
-    android:layout_marginTop="20dp"
-    >
+    android:layout_marginTop="20dp">
 
     <TextView
         android:id="@+id/pub_auteur"
@@ -34,6 +33,15 @@
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/pub_auteur" />
+
+    <ImageView
+        android:id="@+id/pub_is_doctor"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:src="@drawable/doctor"
+        app:layout_constraintBottom_toBottomOf="@+id/pub_auteur"
+        app:layout_constraintStart_toEndOf="@+id/pub_auteur"
+        app:layout_constraintTop_toTopOf="@+id/pub_auteur" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout2"

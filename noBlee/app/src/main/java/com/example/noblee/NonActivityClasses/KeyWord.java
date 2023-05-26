@@ -1,10 +1,6 @@
 package com.example.noblee.NonActivityClasses;
 
-import com.google.firebase.firestore.FirebaseFirestore;
-
-public class FireBase {
-
-    FirebaseFirestore db = FirebaseFirestore.getInstance();
+public class KeyWord {
 
     public static final String PUBLICATION = "Publication";
     public static final String PUB_AUTEUR = "auteur";

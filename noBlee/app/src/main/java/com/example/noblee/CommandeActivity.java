@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.noblee.NonActivityClasses.Commande;
+import com.example.noblee.NonActivityClasses.EtatDialog.EtatCommandeDialog;
 import com.example.noblee.NonActivityClasses.GestionDeMagazin;
 import com.example.noblee.NonActivityClasses.RecycleViewPagnie.ItemPagnie;
 import com.example.noblee.NonActivityClasses.RecycleViewPagnie.PagnieAdapter;
@@ -30,7 +31,7 @@ import java.util.Date;
 public class CommandeActivity extends AppCompatActivity {
 
     RecyclerView recyclerView;
-    AppCompatButton ajouter,confirme,annuler;
+    AppCompatButton ajouter,confirme,annuler,consulterEtatCommandes;
     TextView decripption,prixTotal;
     PagnieAdapter pagnieAdapter;
 
@@ -54,10 +55,11 @@ public class CommandeActivity extends AppCompatActivity {
         annuler = findViewById(R.id.commande_annuler);
         ajouter = findViewById(R.id.commande_ajouter);
         decripption = findViewById(R.id.commande_description);
-        prixTotal = findViewById(R.id.commande_prix_total);
+        prixTotal = findViewById(R.id.item_commande_prix_total);
+        consulterEtatCommandes = findViewById(R.id.commande_consulter_etat);
 
         setUpRecycleView();
-
+        updatePrixTotal();
 
 
         confirme.setOnClickListener(new View.OnClickListener() {
@@ -87,12 +89,18 @@ public class CommandeActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 finish();
-                startActivity(new Intent(getApplicationContext(), ConsulterProduitsActivity.class));
+                startActivity(new Intent(getApplicationContext(), ConsulterActivity.class));
 
             }
         });
 
-        updatePrixTotal();
+        consulterEtatCommandes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                EtatCommandeDialog etatCommandeDialog = new EtatCommandeDialog();
+                etatCommandeDialog.show(((AppCompatActivity) CommandeActivity.this).getSupportFragmentManager(), "etatCommandes");
+            }
+        });
 
     }
     private void setUpRecycleView(){
@@ -109,7 +117,7 @@ public class CommandeActivity extends AppCompatActivity {
         commandeRef
                 .add(new Commande(
                         new Timestamp(new Date()),
-                        User.getInstance().getAdresse(),
+                        User.getInstance().getReference().getPath(),
                         Integer.toString(GestionDePagnies.calculerSommeCommande())
                         )
                 )
@@ -117,7 +125,7 @@ public class CommandeActivity extends AppCompatActivity {
                     @Override
                     public void onSuccess(DocumentReference documentReference) {
                         for (int i = 0; i< GestionDePagnies.pagnies.size(); i++){
-                            documentReference.collection("Ligne_commande")
+                            documentReference.collection("LigneCommande")
                                     .add(new ItemPagnie(
                                             GestionDePagnies.pagnies.get(i).getNom(),
                                             GestionDePagnies.pagnies.get(i).getPrix(),

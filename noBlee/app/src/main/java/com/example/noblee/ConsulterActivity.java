@@ -23,7 +23,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ConsulterProduitsActivity extends AppCompatActivity {
+public class ConsulterActivity extends AppCompatActivity {
 
     View chercheLayout;
     TextView aucuneResult;
@@ -36,7 +36,7 @@ public class ConsulterProduitsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_consulter_produits);
+        setContentView(R.layout.activity_consulter);
 
         magazinsView = findViewById(R.id.consulter_magazins_recycleview);
         chercheLayout = findViewById(R.id.consulter_recherche_layout);
@@ -82,7 +82,7 @@ public class ConsulterProduitsActivity extends AppCompatActivity {
             @Override
             public boolean onQueryTextChange(String s) {
                 chercheResult = new ArrayList<>();
-                ChercheAdapter chercheAdapter = new ChercheAdapter(ConsulterProduitsActivity.this,chercheResult);
+                ChercheAdapter chercheAdapter = new ChercheAdapter(ConsulterActivity.this,chercheResult);
                 setUpChercheRecycleView(chercheAdapter);
                 filterChercheList(s,chercheAdapter);
                 if (chercheResult.size() == 0){
@@ -98,7 +98,7 @@ public class ConsulterProduitsActivity extends AppCompatActivity {
     }
 
     private void filterChercheList(String motKlee, ChercheAdapter chercheAdapter) {
-        // TODO : load produitList avaant recherche
+        // TODO : load produitList avaant recherche //DONE
         // TODO : option par categorie
 
         if (motKlee.equals("")){
@@ -106,7 +106,7 @@ public class ConsulterProduitsActivity extends AppCompatActivity {
         }
         for (ItemMagazin magazin : ((MagazinAdapter) magazinsView.getAdapter()).getMagazins()){
             ItemSearchMagazin itemMagazin = new ItemSearchMagazin(magazin.getNom());
-            for (ItemProduit produit : ((MagazinAdapter) magazinsView.getAdapter()).getProduits()){
+            for (ItemProduit produit : magazin.getProduitList()){
                 if (produit.getNom().toLowerCase().contains(motKlee.toLowerCase())){
                     itemMagazin.produits.add(produit);
                 }
@@ -125,12 +125,9 @@ public class ConsulterProduitsActivity extends AppCompatActivity {
     }
 
     public void setUpMagazinRecycleView(){
-
-        MagazinAdapter magazinAdapter = new MagazinAdapter(ConsulterProduitsActivity.this,magazins = new ArrayList<ItemMagazin>());
-        magazinsView.setLayoutManager(new LinearLayoutManager(ConsulterProduitsActivity.this));
+        MagazinAdapter magazinAdapter = new MagazinAdapter(ConsulterActivity.this,magazins = new ArrayList<ItemMagazin>());
+        magazinsView.setLayoutManager(new LinearLayoutManager(ConsulterActivity.this));
         magazinsView.setAdapter(magazinAdapter);
-
-
         FirebaseFirestore.getInstance()
                 .collection("Magazin")
                 .get()
