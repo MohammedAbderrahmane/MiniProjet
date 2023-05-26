@@ -12,18 +12,15 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.noblee.NonActivityClasses.FireBase;
+import com.example.noblee.NonActivityClasses.KeyWord;
 import com.example.noblee.NonActivityClasses.RecycleViewCommantaire.CommantaireAdapter;
-import com.example.noblee.NonActivityClasses.RecycleViewCommantaire.ItemCommantaire;
 import com.example.noblee.NonActivityClasses.User;
 import com.example.noblee.R;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -32,7 +29,6 @@ public class PublicationAdapter extends RecyclerView.Adapter<PublicationHolder> 
 
     Context context;
     List<ItemPublication> publications;
-    List<ItemCommantaire> commantaires;
 
     public PublicationAdapter(Context context, List<ItemPublication> publications) {
         this.context = context;
@@ -48,15 +44,16 @@ public class PublicationAdapter extends RecyclerView.Adapter<PublicationHolder> 
     @Override
     public void onBindViewHolder(@NonNull PublicationHolder holder, int position) {
         ItemPublication publication = publications.get(position);
-
+try{
         holder.auteur.setText(publication.getAuteur());
         holder.date.setText(publication.calculerDate());
         holder.contenu.setText(publication.getContenu());
         holder.like.setText(publication.getNumLike());
         holder.dislike.setText(publication.getNumDislike());
 
+        setUpDoctorBadge(publication,holder);
+
         setUpModirateur(holder);
-        //updateLikeDislike(publication);
 
         holder.modirateurSupprimer.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -111,6 +108,18 @@ public class PublicationAdapter extends RecyclerView.Adapter<PublicationHolder> 
                 ajouterUnCommantaire(holder,holder.newCommantaire.getText().toString(),publication);
             }
         });
+    }catch (Exception e){Toast.makeText(context, e.toString(), Toast.LENGTH_SHORT).show();}
+    }
+
+    private void setUpDoctorBadge(ItemPublication publication, PublicationHolder holder) {
+        try {
+            if (publication.isCreeParMedecin()){
+                holder.isDoctorImage.setVisibility(View.VISIBLE);
+                return;
+            }
+            holder.isDoctorImage.setVisibility(View.GONE);
+        }catch (Exception e){Toast.makeText(context, e.toString(), Toast.LENGTH_SHORT).show();}
+
     }
 
     private void setUpModirateur(PublicationHolder holder) {
@@ -132,39 +141,15 @@ public class PublicationAdapter extends RecyclerView.Adapter<PublicationHolder> 
     }
 
     private void setUpCommantaires(ItemPublication publication, PublicationHolder holder) {
-        CommantaireAdapter commantaireAdapter = new CommantaireAdapter(context,commantaires = new ArrayList<>());
+        CommantaireAdapter commantaireAdapter = new CommantaireAdapter(context,publication.getCommantaireList());
         holder.commantaireRecycleView.setLayoutManager(new LinearLayoutManager(context));
         holder.commantaireRecycleView.setAdapter(commantaireAdapter);
-        publication.getReference()
-                .collection(FireBase.PUB_COMMANTAIRE)
-                .get()
-                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-                    @Override
-                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                        for (DocumentSnapshot document : queryDocumentSnapshots){
-                            commantaires.add(
-                                    new ItemCommantaire(
-                                            document.getString("user"),
-                                            document.getString("contenu"),
-                                            document.getReference()
-                                    )
-                            );
-                        }
-                        holder.commantaireRecycleView.getAdapter().notifyDataSetChanged();
-                    }
-                });
+
     }
 
     private void ajouterUnCommantaire(PublicationHolder holder, String newCommantaire, ItemPublication publication) {
-        publication.getReference()
-                .collection(FireBase.PUB_COMMANTAIRE)
-                .add(
-                        new ItemCommantaire(
-                        User.getInstance().getNom() + " " + User.getInstance().getPrenom(),
-                        newCommantaire
-                        )
-                ).
-                addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+        publication.ajouterCommantaire(newCommantaire)
+                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                     @Override
                     public void onSuccess(DocumentReference reference) {
                         holder.ajouterNewCommantaire.setEnabled(false);
@@ -179,8 +164,8 @@ public class PublicationAdapter extends RecyclerView.Adapter<PublicationHolder> 
         String currentUser = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
         publication.getReference()
-                .collection((isItLike ? FireBase.PUB_LIKE : FireBase.PUB_DISLIKE))
-                .whereEqualTo(FireBase.REACTOR, currentUser)
+                .collection((isItLike ? KeyWord.PUB_LIKE : KeyWord.PUB_DISLIKE))
+                .whereEqualTo(KeyWord.REACTOR, currentUser)
                 .get()
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                     @Override
@@ -212,8 +197,8 @@ public class PublicationAdapter extends RecyclerView.Adapter<PublicationHolder> 
             // delleting confilct like/dislike
 
         publication.getReference()
-                .collection((isItLike ? FireBase.PUB_DISLIKE : FireBase.PUB_LIKE))
-                .whereEqualTo(FireBase.REACTOR, currentUser)
+                .collection((isItLike ? KeyWord.PUB_DISLIKE : KeyWord.PUB_LIKE))
+                .whereEqualTo(KeyWord.REACTOR, currentUser)
                 .get()
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                     @Override
@@ -228,7 +213,7 @@ public class PublicationAdapter extends RecyclerView.Adapter<PublicationHolder> 
 
             // add like/dislike
         publication.getReference()
-                .collection(isItLike ? FireBase.PUB_LIKE : FireBase.PUB_DISLIKE)
+                .collection(isItLike ? KeyWord.PUB_LIKE : KeyWord.PUB_DISLIKE)
                 .add(new Like(currentUser))
                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                     @Override
@@ -242,16 +227,16 @@ public class PublicationAdapter extends RecyclerView.Adapter<PublicationHolder> 
     private void updateLikeDislike(ItemPublication publication){
         Map<String,Object> update = new HashMap<>();
         // TODO : contineue
-        publication.getReference().collection(FireBase.PUB_LIKE).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+        publication.getReference().collection(KeyWord.PUB_LIKE).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
             @Override
             public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
                 publication.setNumLike(String.valueOf(queryDocumentSnapshots.size()));
-                update.put(FireBase.PUB_NUM_LIKE,publication.getNumLike());
-                publication.getReference().collection(FireBase.PUB_DISLIKE).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                update.put(KeyWord.PUB_NUM_LIKE,publication.getNumLike());
+                publication.getReference().collection(KeyWord.PUB_DISLIKE).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                     @Override
                     public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
                         publication.setNumDislike(String.valueOf(queryDocumentSnapshots.size()));
-                        update.put(FireBase.PUB_NUM_DISLIKE,publication.getNumDislike());
+                        update.put(KeyWord.PUB_NUM_DISLIKE,publication.getNumDislike());
                         publication.getReference().update(update);
                         notifyDataSetChanged();
                     }

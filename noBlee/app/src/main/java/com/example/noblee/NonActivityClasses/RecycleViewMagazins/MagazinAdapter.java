@@ -10,22 +10,15 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.example.noblee.NonActivityClasses.RecycleViewProduits.ItemProduit;
 import com.example.noblee.NonActivityClasses.RecycleViewProduits.ProduitAdapter;
 import com.example.noblee.R;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class MagazinAdapter extends RecyclerView.Adapter<MagazinHolder>{
 
     Context context;
     List<ItemMagazin> magazins;
-    List<ItemProduit> produits;
 
     public MagazinAdapter(Context context, List<ItemMagazin> magazins) {
         this.context = context;
@@ -64,34 +57,15 @@ public class MagazinAdapter extends RecyclerView.Adapter<MagazinHolder>{
         }
         holder.produitsRecycleView.setVisibility(View.VISIBLE);
         holder.consulter.setText("Casher les produits");
-        setUpRecycleView(holder,magazin.getReference());
+        setUpRecycleView(holder,magazin);
     }
 
-    public void setUpRecycleView(MagazinHolder holder, DocumentReference reference) {
-        ProduitAdapter produitAdapter = new ProduitAdapter(context,produits = new ArrayList<ItemProduit>());
-        produitAdapter.setMagazinRef(reference);
+    public void setUpRecycleView(MagazinHolder holder, ItemMagazin magazin) {
+        ProduitAdapter produitAdapter = new ProduitAdapter(context,magazin.getProduitList());
+        produitAdapter.setMagazinRef(magazin.getReference());
         holder.produitsRecycleView.setLayoutManager(new LinearLayoutManager(context));
         holder.produitsRecycleView.setAdapter(produitAdapter);
 
-
-        reference.collection("Produits")
-                .get()
-                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-                    @Override
-                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                        for (QueryDocumentSnapshot documentSnapshot : queryDocumentSnapshots){
-                            produits.add(
-                                    new ItemProduit(
-                                            documentSnapshot.getString("nom"),
-                                            documentSnapshot.getString("prix"),
-                                            documentSnapshot.getString("imageUrl"),
-                                            documentSnapshot.getString("categorie")
-                                    )
-                            );
-                        }
-                        produitAdapter.notifyDataSetChanged();
-                    }
-                });
     }
 
     private void setUpImage(MagazinHolder holder,String imageUrl) {
@@ -109,29 +83,6 @@ public class MagazinAdapter extends RecyclerView.Adapter<MagazinHolder>{
         return magazins;
     }
 
-    public List<ItemProduit> getProduits() {
-        return produits;
-    }
-
-    public void fillProduitsList(DocumentReference reference){
-        reference.collection("Produits")
-                .get()
-                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-                    @Override
-                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                        for (QueryDocumentSnapshot documentSnapshot : queryDocumentSnapshots){
-                            produits.add(
-                                    new ItemProduit(
-                                            documentSnapshot.getString("nom"),
-                                            documentSnapshot.getString("prix"),
-                                            documentSnapshot.getString("imageUrl"),
-                                            documentSnapshot.getString("categorie")
-                                    )
-                            );
-                        }
-                    }
-                });
-    }
 
 
 }

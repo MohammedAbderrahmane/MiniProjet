@@ -1,18 +1,39 @@
 package com.example.noblee.NonActivityClasses.RecycleViewPublication;
 
+import com.example.noblee.NonActivityClasses.KeyWord;
+import com.example.noblee.NonActivityClasses.RecycleViewCommantaire.ItemCommantaire;
+import com.example.noblee.NonActivityClasses.User;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.time.LocalDate;
 import java.time.Period;
 import java.time.ZoneId;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class ItemPublication {
     String auteur,contenu, numLike, numDislike;
     Date date;
     DocumentReference reference;
     boolean creeParMedecin;
+    List<ItemCommantaire> commantaireList;
 
+
+    public ItemPublication(String auteur, String contenu, Date date, String likes, String dislikes,DocumentReference reference, Boolean creeParMedecin) {
+        this.auteur = auteur;
+        this.date = date;
+        this.contenu = contenu;
+        this.numLike = likes;
+        this.numDislike = dislikes;
+        this.reference = reference;
+        this.creeParMedecin = creeParMedecin;
+        setUpCommanatires();
+    }
 
     public ItemPublication(String auteur, String contenu, Date date, String likes, String dislikes, Boolean creeParMedecin) {
         this.auteur = auteur;
@@ -21,6 +42,38 @@ public class ItemPublication {
         this.numLike = likes;
         this.numDislike = dislikes;
         this.creeParMedecin = creeParMedecin;
+        //setUpCommanatires();
+    }
+
+    private void setUpCommanatires() {
+        commantaireList = new ArrayList<>();
+        reference.collection(KeyWord.PUB_COMMANTAIRE)
+                .get()
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                        for (DocumentSnapshot document : queryDocumentSnapshots){
+                            commantaireList.add(
+                                    new ItemCommantaire(
+                                            document.getString("user"),
+                                            document.getString("contenu"),
+                                            document.getReference()
+                                    )
+                            );
+                        }
+                    }
+                });
+    }
+
+    public Task<DocumentReference> ajouterCommantaire(String contenu){
+        ItemCommantaire commantaire = new ItemCommantaire(
+                User.getInstance().getNom() + " " + User.getInstance().getPrenom(),
+                contenu
+        );
+
+        commantaireList.add(commantaire);
+        return reference.collection(KeyWord.PUB_COMMANTAIRE)
+                .add(commantaire);
     }
     public String calculerDate() {
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
@@ -90,5 +143,9 @@ public class ItemPublication {
 
     public void setCreeParMedecin(boolean creeParMedecin) {
         this.creeParMedecin = creeParMedecin;
+    }
+
+    public List<ItemCommantaire> getCommantaireList() {
+        return commantaireList;
     }
 }

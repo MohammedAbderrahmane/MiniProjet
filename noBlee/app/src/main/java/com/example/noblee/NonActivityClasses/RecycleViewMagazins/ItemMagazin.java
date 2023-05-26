@@ -1,9 +1,17 @@
 package com.example.noblee.NonActivityClasses.RecycleViewMagazins;
 
+import com.example.noblee.NonActivityClasses.RecycleViewProduits.ItemProduit;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ItemMagazin {
     String nom,location,nomVondeur,telephone,imageUrl;
+    List<ItemProduit> produitList;
 
     DocumentReference reference;
     public ItemMagazin(String nom, String location, String nom_vondeur, String telephone, String imageUrl, DocumentReference reference) {
@@ -13,6 +21,28 @@ public class ItemMagazin {
         this.telephone = telephone;
         this.imageUrl = imageUrl;
         this.reference = reference;
+        setUpProduits();
+    }
+
+    private void setUpProduits() {
+        produitList = new ArrayList<>();
+        reference.collection("Produits")
+                .get()
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                        for (QueryDocumentSnapshot documentSnapshot : queryDocumentSnapshots){
+                            produitList.add(
+                                    new ItemProduit(
+                                            documentSnapshot.getString("nom"),
+                                            documentSnapshot.getString("prix"),
+                                            documentSnapshot.getString("imageUrl"),
+                                            documentSnapshot.getString("categorie")
+                                    )
+                            );
+                        }
+                    }
+                });
     }
 
     public String getLocation() {
@@ -61,5 +91,9 @@ public class ItemMagazin {
 
     public void setTelephone(String telephone) {
         this.telephone = telephone;
+    }
+
+    public List<ItemProduit> getProduitList() {
+        return produitList;
     }
 }
